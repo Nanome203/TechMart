@@ -1,0 +1,39 @@
+export default function ProductDetails() {
+  return (
+    <>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+      <div>ProductDetails</div>
+    </>
+  );
+}
