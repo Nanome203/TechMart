@@ -20,10 +20,7 @@ function Layout() {
           className="flex h-[80px] w-screen justify-around bg-[#0071CE]"
         >
           <div id="logo" className="flex h-full items-center gap-2 px-5">
-            <img
-              src="https://media.istockphoto.com/id/1412901513/vector/modern-hand-technology-logo-design.jpg?s=612x612&w=0&k=20&c=zZ4Kh-J2BV_oLfx8Tfd65aUFdTNlCvjmWxLOT4sEeVs="
-              className="w-12 rounded-full"
-            />
+            <img src="/src/assets/Logo.png" className="w-12 rounded-full" />
             <p className="font-[Oswald] text-3xl text-white">TechMart</p>
           </div>
           <div id="location" className="flex h-full items-center gap-2 px-5">
@@ -74,13 +71,13 @@ function Layout() {
           id="categories"
           className="flex h-[50px] w-screen items-center justify-center bg-gray-200"
         >
-          <div className="flex h-full w-5 flex-1 items-center justify-center">
+          <div className="flex h-full w-5 flex-1 cursor-pointer items-center justify-center hover:bg-gray-400 active:bg-gray-300">
             <i className="fa-solid fa-bars"></i>
           </div>
           {categories.map((category, index) => (
             <div
               key={index}
-              className="flex h-full w-10 flex-1 items-center justify-center border-l border-l-black"
+              className="flex h-full w-10 flex-1 cursor-pointer items-center justify-center border-l border-l-black hover:bg-gray-400 active:bg-gray-300"
             >
               <p>{category}</p>
             </div>
@@ -135,10 +132,7 @@ function Layout() {
           </div>
         </div>
         <div className="flex w-screen items-center justify-center gap-2 px-5">
-          <img
-            src="https://media.istockphoto.com/id/1412901513/vector/modern-hand-technology-logo-design.jpg?s=612x612&w=0&k=20&c=zZ4Kh-J2BV_oLfx8Tfd65aUFdTNlCvjmWxLOT4sEeVs="
-            className="w-20 rounded-full"
-          />
+          <img src="/src/assets/Logo.png" className="w-20 rounded-full" />
           <p className="font-[Oswald] text-5xl text-white">TechMart</p>
         </div>
         <p className="text-bold m-5 text-xl text-white">
