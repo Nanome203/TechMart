@@ -11,7 +11,7 @@ const routerConfig = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/product/:id",
+        path: "/products/:id",
         element: <ProductDetails />,
       },
     ],

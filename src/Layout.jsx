@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const categories = [
   "Events",
@@ -19,11 +19,19 @@ function Layout() {
           id="utilities"
           className="flex h-[80px] w-screen justify-around bg-[#0071CE]"
         >
-          <div id="logo" className="flex h-full items-center gap-2 px-5">
-            <img src="/src/assets/Logo.png" className="w-12 rounded-full" />
-            <p className="font-[Oswald] text-3xl text-white">TechMart</p>
-          </div>
-          <div id="location" className="flex h-full items-center gap-2 px-5">
+          <Link to="/">
+            <div
+              id="logo"
+              className="flex h-full cursor-pointer items-center gap-2"
+            >
+              <img src="/src/assets/Logo.png" className="w-12 rounded-full" />
+              <p className="font-[Oswald] text-3xl text-white">TechMart</p>
+            </div>
+          </Link>
+          <div
+            id="location"
+            className="flex h-full cursor-pointer items-center gap-2 px-5"
+          >
             <i className="fa-solid fa-location-crosshairs text-4xl text-white"></i>
             <div id="location-wrapper" className="text-white">
               <p>Deliver to</p>
@@ -43,24 +51,30 @@ function Layout() {
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-          <div id="reorder" className="flex h-full items-center gap-2 px-5">
+          <div
+            id="reorder"
+            className="flex h-full cursor-pointer items-center gap-2 px-5"
+          >
             <i className="fa-regular fa-heart text-4xl text-white"></i>
-            <div id="location-wrapper" className="text-white">
+            <div id="reorder-wrapper" className="text-white">
               <p>Want to</p>
               <p className="font-bold">Reorder item?</p>
             </div>
           </div>
-          <div id="sign-in" className="flex h-full items-center gap-2 px-5">
+          <div
+            id="sign-in"
+            className="flex h-full cursor-pointer items-center gap-2 px-5"
+          >
             <i className="fa-regular fa-user text-4xl text-white"></i>
 
-            <div id="location-wrapper" className="text-white">
+            <div id="sign-in-wrapper" className="text-white">
               <p>Welcome, need to</p>
               <p className="font-bold">Sign in?</p>
             </div>
           </div>
           <div
-            id="sign-in"
-            className="flex h-full flex-col items-center justify-center px-5"
+            id="cart"
+            className="flex h-full cursor-pointer flex-col items-center justify-center px-5"
           >
             <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
             <p className="text-sm text-white">$300</p>
@@ -71,13 +85,13 @@ function Layout() {
           id="categories"
           className="flex h-[50px] w-screen items-center justify-center bg-gray-200"
         >
-          <div className="flex h-full w-5 flex-1 cursor-pointer items-center justify-center hover:bg-gray-400 active:bg-gray-300">
+          <div className="flex h-full w-5 flex-1 cursor-pointer items-center justify-center hover:bg-gray-400">
             <i className="fa-solid fa-bars"></i>
           </div>
           {categories.map((category, index) => (
             <div
               key={index}
-              className="flex h-full w-10 flex-1 cursor-pointer items-center justify-center border-l border-l-black hover:bg-gray-400 active:bg-gray-300"
+              className="flex h-full w-10 flex-1 cursor-pointer items-center justify-center border-l border-l-black hover:bg-gray-400"
             >
               <p>{category}</p>
             </div>
