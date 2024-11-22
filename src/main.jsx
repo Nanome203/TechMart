@@ -5,6 +5,7 @@ import Layout from "./Layout.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductDetails from "./routes/ProductDetailsPage.jsx";
 import ErrorPage from "./routes/ErrorPage.jsx";
+import Payment from "./routes/Payment.jsx";
 
 const routerConfig = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const routerConfig = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
       },
     ],
     errorElement: <ErrorPage />,
