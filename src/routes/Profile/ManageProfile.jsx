@@ -29,6 +29,43 @@ function ManageProfile() {
   const [zipCode, setZipCode] = useState(user.zipCode);
   const [personalQuote, setPersonalQuote] = useState(user.personalQuote);
 
+  const [openModal, setOpenModal] = useState(false);
+  const openModalHandler = () => {
+    setOpenModal(true);
+  };
+  const closeModalHandler = () => {
+    setOpenModal(false);
+  };
+  const saveChangesHandler = () => {
+    console.log("Save changes");
+    closeModalHandler();
+  };
+  function Modal() {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="w-6/12 rounded-md bg-white p-8">
+          <h2 className="mb-4 text-2xl font-semibold">
+            Xác nhận cập nhập thông tin người dùng?
+          </h2>
+          <div className="flex justify-end gap-4">
+            <button
+              className="h-[40px] w-[100px] rounded-md border-2 border-gray-300 bg-[#f5f5f5] hover:brightness-75"
+              onClick={closeModalHandler}
+            >
+              Cancel
+            </button>
+            <button
+              className="h-[40px] w-[100px] rounded-md bg-[#1173be] text-white hover:brightness-125"
+              onClick={saveChangesHandler}
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const firstNameChange = (e) => {
     setFirstName(e.target.value);
   };
@@ -208,13 +245,14 @@ function ManageProfile() {
       </div>
 
       <div className="mr-10 mt-4 flex justify-end gap-4">
-        <button className="h-[40px] w-[100px] rounded-md border-2 border-gray-300 bg-[#f5f5f5] hover:brightness-75">
-          Cancel
-        </button>
-        <button className="h-[40px] w-[100px] rounded-md bg-[#1173be] text-white hover:brightness-125">
+        <button
+          className="h-[40px] w-[100px] rounded-md bg-[#1173be] text-white hover:brightness-125"
+          onClick={openModalHandler}
+        >
           Save
         </button>
       </div>
+      {openModal && <Modal />}
     </div>
   );
 }
