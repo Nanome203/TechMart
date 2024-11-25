@@ -7,7 +7,7 @@ export default function ProductDetails() {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 3000, min: 1500 },
-      items: 8,
+      items: 6,
       slidesToSlide: 7,
     },
     superLargeDesktop: {
@@ -37,10 +37,10 @@ export default function ProductDetails() {
     },
   };
   return (
-    <div className="w-screen px-2 py-5">
-      <section className="mx-3 mb-5 flex min-h-screen w-full gap-10 rounded-2xl bg-white p-5">
+    <div className="w-screen">
+      <section className="mx-3 mb-5 flex w-full gap-10 rounded-2xl bg-white p-5">
         {/* Images */}
-        <div className="h-full basis-1/3">
+        <div className="basis-1/3">
           <div className="relative w-full">
             <img
               src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
@@ -104,7 +104,7 @@ export default function ProductDetails() {
                 alt="sofa"
                 className="w-20 rounded-3xl object-contain"
               />
-              <div className="absolute left-0 top-0 h-full w-full rounded-3xl bg-black opacity-50">
+              <div className="absolute left-0 top-0 h-full w-full rounded-3xl bg-black bg-opacity-50">
                 <div className="flex h-full w-full items-center justify-center text-2xl text-white">
                   +10
                 </div>
@@ -114,7 +114,7 @@ export default function ProductDetails() {
         </div>
 
         {/* Info */}
-        <div className="h-full basis-1/3">
+        <div className="basis-1/3">
           <div className="w-full">
             <h1 className="line-clamp-3 text-2xl">
               City Scene - Queen Comforter Set, Smooth & Soft Bedding with
@@ -182,7 +182,103 @@ export default function ProductDetails() {
         </div>
 
         {/* Buy button */}
-        <div className="h-full basis-1/3"></div>
+        <div className="basis-1/3">
+          <div className="h-full w-11/12 rounded-xl bg-[#E5E5E5] p-5">
+            <section>
+              <h1 className="text-3xl font-bold text-[#008500]">
+                Now $67.99{" "}
+                <sup className="text-lg font-normal text-gray-500">
+                  <s>$149.99</s> <i className="fa-solid fa-circle-info"></i>
+                </sup>
+              </h1>
+              <div className="flex h-10 w-full items-center gap-2">
+                <div className="flex items-center justify-center bg-[#008500] bg-opacity-25 px-5 py-1 text-[#008500]">
+                  <span>You save</span>
+                </div>
+                <div className="font-bold text-[#008500]">$82.00</div>
+              </div>
+              <div>
+                As low as <b>$6.05/month</b> or <b>0%</b> with{" "}
+                <b>TechMart Premium+</b>
+              </div>
+              <div className="flex h-12 w-full items-center gap-5">
+                <div className="flex items-center gap-2">
+                  <i className="fa-solid fa-truck-fast"></i>
+                  <span>Free shipping</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <i className="fa-solid fa-rotate-left"></i>
+                  <span>Free 90-day return policy</span>
+                </div>
+              </div>
+              <div className="flex w-full flex-col items-center gap-2">
+                <button className="h-14 w-10/12 rounded-full border-2 border-[#1173BE] text-xl font-bold text-[#1173BE] hover:bg-[#1173BE] hover:text-white active:bg-blue-500">
+                  Add to Cart
+                </button>
+                <button className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700">
+                  Buy now
+                </button>
+              </div>
+              <hr className="my-5 border-black opacity-40" />
+            </section>
+            <section>
+              <h1 className="text-3xl font-semibold">
+                Warranty Option{" "}
+                <sup className="cursor-pointer text-sm font-normal underline">
+                  What&apos;s covered
+                </sup>
+              </h1>
+              <div>(Only one option can be selected only)</div>
+              <div className="mx-auto my-3 flex h-48 w-11/12 flex-col items-center justify-center gap-2 rounded-3xl bg-[#1173BE] bg-opacity-20 text-2xl">
+                <div>
+                  <input type="radio" name="warranty" /> 1-year warranty plan -
+                  $08.00
+                </div>
+                <div>
+                  <input type="radio" name="warranty" /> 2-year warranty plan -
+                  $14.00
+                </div>
+                <div>
+                  <input type="radio" name="warranty" /> 3-year warranty plan -
+                  $17.00
+                </div>
+              </div>
+              <hr className="my-5 border-black opacity-40" />
+            </section>
+            <section>
+              <h1 className="text-3xl font-bold">How do you want your item?</h1>
+              <div className="my-5 flex w-full gap-2">
+                <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
+                  <i className="fa-solid fa-bolt-lightning text-5xl"></i>
+                  <h1 className="text-xl font-bold">Fast delivery</h1>
+                  <p className="h-20 text-center">
+                    TechMart Premium+ Free charge for fast delivery. Take up to
+                    2 days
+                  </p>
+                </div>
+                <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
+                  <i className="fa-solid fa-truck text-5xl"></i>
+                  <h1 className="text-xl font-bold">Shipping</h1>
+                  <p className="h-20 text-center">
+                    Casual delivery. Take 2 - 4 days to deliver.
+                  </p>
+                </div>
+                <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
+                  <i className="fa-solid fa-car text-5xl"></i>
+                  <h1 className="text-xl font-bold">Pick up</h1>
+                  <p className="h-20 text-center">Go to the techMart store</p>
+                </div>
+              </div>
+              <div className="text-lg">
+                Deliver to{" "}
+                <span className="font-bold underline">
+                  Ho Chi Minh, Vietnam
+                </span>
+              </div>
+              <hr className="my-5 border-black opacity-40" />
+            </section>
+          </div>
+        </div>
       </section>
       <section>
         <h1 className="ml-3 text-2xl font-bold">
