@@ -739,11 +739,19 @@ export default function Payment() {
                     />
                   </div>
                 </div>
-                <div>
+                <div
+                  className={"cursor-pointer hover:opacity-80"}
+                  onClick={() => {
+                    setDeliveryAddress((prev) => ({
+                      ...prev,
+                      emailNews: !prev.emailNews,
+                    }));
+                  }}
+                >
                   <input
                     type="checkbox"
                     name="email_news"
-                    className={"mr-3"}
+                    className={"mr-3 cursor-pointer"}
                     checked={deliveryAddress.emailNews}
                     onChange={() => {
                       setDeliveryAddress((prev) => ({
@@ -752,7 +760,10 @@ export default function Payment() {
                       }));
                     }}
                   />
-                  <label for="email_news">
+                  <label
+                    for="email_news"
+                    className={"cursor-pointer hover:opacity-80"}
+                  >
                     Email me about hot items, great saving, and more.
                   </label>
                 </div>
