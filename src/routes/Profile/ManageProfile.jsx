@@ -44,8 +44,8 @@ function ManageProfile() {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div className="w-6/12 rounded-md bg-white p-8">
-          <h2 className="mb-4 text-2xl font-semibold">
-            Xác nhận cập nhập thông tin người dùng?
+          <h2 className="mb-4 text-2xl font-medium">
+            Confirm update of user information?
           </h2>
           <div className="flex justify-end gap-4">
             <button
