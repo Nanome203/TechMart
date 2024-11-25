@@ -4,7 +4,7 @@ import Footer from "./atoms/Footer";
 
 function Layout() {
   return (
-    <div className="flex h-screen min-h-screen w-screen flex-col justify-between overflow-x-hidden bg-[#f5f5f5]">
+    <div className="flex h-screen min-h-screen w-screen flex-col justify-between bg-[#f5f5f5]">
       <Header />
       <Outlet />
       <Footer />
