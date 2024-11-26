@@ -2,6 +2,18 @@ import ProductTag from "../atoms/ProductTag";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+const Stars = ({ className }) => {
+  return (
+    <>
+      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
+      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
+      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
+      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
+      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
+    </>
+  );
+};
+
 export default function ProductDetails() {
   const responsive = {
     ultraLargeDesktop: {
@@ -121,11 +133,7 @@ export default function ProductDetails() {
               Matching Shams, Modern Home Decor (Courtney White, Queen)
             </h1>
             <div>
-              4.5 <i className="fa-solid fa-star text-[#FCAC00]"></i>
-              <i className="fa-solid fa-star text-[#FCAC00]"></i>
-              <i className="fa-solid fa-star text-[#FCAC00]"></i>
-              <i className="fa-solid fa-star text-[#FCAC00]"></i>
-              <i className="fa-solid fa-star text-[#FCAC00]"></i> (259 ratings)
+              5.0 <Stars /> (259 ratings)
             </div>
             <hr className="my-5 border-y-2" />
           </div>
@@ -183,7 +191,7 @@ export default function ProductDetails() {
 
         {/* Buy button */}
         <div className="basis-1/3">
-          <div className="h-full w-11/12 rounded-xl bg-[#E5E5E5] p-5">
+          <div className="h-full w-11/12 rounded-xl bg-[#E5E5E5] bg-opacity-50 p-5">
             <section>
               <h1 className="text-3xl font-bold text-[#008500]">
                 Now $67.99{" "}
@@ -277,11 +285,27 @@ export default function ProductDetails() {
               </div>
               <hr className="my-5 border-black opacity-40" />
             </section>
+            <section>
+              <div className="text-lg">
+                Sold and shipped by TechMart. <u>See details</u>.
+              </div>
+              <div className="my-3 flex w-full">
+                <div className="flex basis-1/2 items-center justify-center gap-2">
+                  <i className="fa-regular fa-heart text-2xl"></i>
+                  <div>Add to Wishlist</div>
+                </div>
+                <div className="flex basis-1/2 items-center justify-center gap-2">
+                  <i className="fa-solid fa-gift text-2xl"></i>
+                  <div>Add to Wishlist</div>
+                </div>
+              </div>
+              <hr className="my-5 border-black opacity-40" />
+            </section>
           </div>
         </div>
       </section>
       <section>
-        <h1 className="ml-3 text-2xl font-bold">
+        <h1 className="ml-3 text-3xl font-bold">
           Related items you may be interested
         </h1>
         <Carousel responsive={responsive}>
@@ -374,6 +398,72 @@ export default function ProductDetails() {
             originalPrice={200}
           />
         </Carousel>
+      </section>
+      <section className="mx-3 rounded-xl bg-white">
+        <h1 className="p-5 text-3xl font-bold">Customer ratings & reviews</h1>
+        <div className="flex w-full">
+          <div className="flex basis-2/5 flex-col items-center justify-center gap-2">
+            <h1 className="text-5xl font-bold">5 out of 5</h1>
+            <div className="flex">
+              <div className="px-5">
+                <Stars className={"text-2xl"} />
+              </div>
+              <div className="border-l-2 border-gray-300 px-5 text-xl italic">
+                259 ratings
+              </div>
+              <div className="border-l-2 border-gray-300 px-5 text-xl italic">
+                98 reviews
+              </div>
+            </div>
+            <div className="text-xl font-bold">
+              How item rating is calculated{" "}
+              <i className="fa-solid fa-circle-info px-3"></i>
+            </div>
+            <button className="mb-5 rounded-full border-2 border-black px-5 py-3 text-xl font-bold hover:bg-black hover:text-white active:bg-transparent active:text-black">
+              View all reviews
+            </button>
+          </div>
+          <div className="flex basis-3/5 items-center justify-center">
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <div>
+                  5 <i className="fa-solid fa-star text-[#FCAC00]"></i>
+                </div>
+                <div className="h-6 w-[500px] rounded-full bg-[#1173BE]"></div>
+                <div>100% (259 ratings)</div>
+              </div>
+              <div className="flex gap-2">
+                <div>
+                  4 <i className="fa-solid fa-star text-[#FCAC00]"></i>
+                </div>
+                <div className="h-6 w-[500px] rounded-full bg-[#D9D9D9]"></div>
+                <div>0% (0 ratings)</div>
+              </div>
+              <div className="flex gap-2">
+                <div>
+                  3 <i className="fa-solid fa-star text-[#FCAC00]"></i>
+                </div>
+                <div className="h-6 w-[500px] rounded-full bg-[#D9D9D9]"></div>
+                <div>0% (0 ratings)</div>
+              </div>
+              <div className="flex gap-2">
+                <div>
+                  2 <i className="fa-solid fa-star text-[#FCAC00]"></i>
+                </div>
+                <div className="h-6 w-[500px] rounded-full bg-[#D9D9D9]"></div>
+                <div>0% (0 ratings)</div>
+              </div>
+              <div className="flex gap-2">
+                <div>
+                  1 <i className="fa-solid fa-star text-[#FCAC00]"></i>
+                </div>
+                <div className="h-6 w-[500px] rounded-full bg-[#D9D9D9]"></div>
+                <div>0% (0 ratings)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h1 className="p-5 text-xl font-bold">Showing 1-3 of 98 reviews</h1>
       </section>
     </div>
   );
