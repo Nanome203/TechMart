@@ -82,7 +82,7 @@ export default function Header() {
 
       <div
         id="categories"
-        className="flex h-[50px] items-center justify-center bg-gray-200"
+           className="flex h-[50px] w-full items-center justify-center bg-gray-200"
       >
         <div className="flex h-full w-5 flex-1 cursor-pointer items-center justify-center hover:bg-gray-400">
           <i className="fa-solid fa-bars"></i>

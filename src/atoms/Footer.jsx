@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="flex w-full  flex-col items-center bg-[#0071CE]">
+    <footer className="flex w-full flex-col items-center bg-[#0071CE]">
       <div className="flex h-72 w-full items-center justify-center">
         <div className="flex w-1/2">
           <div
