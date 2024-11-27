@@ -14,6 +14,51 @@ const Stars = ({ className }) => {
   );
 };
 
+const Review = () => (
+  <div className="w-full border-b-2 border-gray-200 p-5">
+    <div>March 25, 2024</div>
+    <div className="flex">
+      <div className="basis-1/4 space-y-1">
+        <div className="flex items-center gap-2 text-xl font-bold">
+          <i className="fa-regular fa-circle-user text-2xl"></i>
+          John Doe
+        </div>
+        <div className="font-bold">Item details</div>
+        <div>
+          <p>Bed size: King</p>
+          <p>Color: Gray</p>
+        </div>
+        <div className="font-bold">Sold by</div>
+        <div>TechMart.com</div>
+      </div>
+      <div className="basis-3/5 space-y-1">
+        <div className="flex items-center gap-2">
+          <Stars className={"text-lg"} />{" "}
+          <span className="font-bold">Verified Purchase</span>{" "}
+          <i className="fa-solid fa-circle-info"></i>
+        </div>
+        <div className="font-bold">High quality bed for modern bedroom!</div>
+        <p>
+          A really good bed that with high quality set of comfortable mattress
+          and pillows. It is really worth to buy. I’m glad that I discovered
+          this match for my bedroom. Also it is really beautiful and come in
+          handy for sleeping.
+        </p>
+        <div className="flex items-center gap-5 py-5">
+          <div>Helpful review?</div>
+          <div className="text-md flex items-center gap-2">
+            <i className="fa-regular fa-thumbs-up text-xl"></i>9
+          </div>
+          <div className="text-md flex items-center gap-2">
+            <i className="fa-regular fa-thumbs-down text-xl"></i>2
+          </div>
+          <div className="border-l-2 border-gray-500 px-5">Report</div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 export default function ProductDetails() {
   const responsive = {
     ultraLargeDesktop: {
@@ -184,6 +229,18 @@ export default function ProductDetails() {
               <li>Unavailable</li>
               <li>Unavailable</li>
               <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
+              <li>Unavailable</li>
             </ul>
             <hr className="my-5 border-y-2" />
           </div>
@@ -299,7 +356,6 @@ export default function ProductDetails() {
                   <div>Add to Wishlist</div>
                 </div>
               </div>
-              <hr className="my-5 border-black opacity-40" />
             </section>
           </div>
         </div>
@@ -399,7 +455,7 @@ export default function ProductDetails() {
           />
         </Carousel>
       </section>
-      <section className="mx-3 rounded-xl bg-white">
+      <section className="mx-3 rounded-xl bg-white pb-5">
         <h1 className="p-5 text-3xl font-bold">Customer ratings & reviews</h1>
         <div className="flex w-full">
           <div className="flex basis-2/5 flex-col items-center justify-center gap-2">
@@ -464,6 +520,67 @@ export default function ProductDetails() {
           </div>
         </div>
         <h1 className="p-5 text-xl font-bold">Showing 1-3 of 98 reviews</h1>
+        <Review />
+        <Review />
+        <Review />
+        <button className="mx-auto mt-5 block rounded-full border-2 border-black px-5 py-3 text-xl font-bold hover:bg-black hover:text-white active:bg-transparent active:text-black">
+          View more reviews
+        </button>
+      </section>
+      <section className="mx-3 mt-5 rounded-xl bg-white p-5">
+        <h1 className="text-3xl font-bold">Related product keyword</h1>
+        <div className="my-5 rounded-full bg-[#D9D9D9] px-5 py-3">
+          Product not satisfied?{" "}
+          <u className="cursor-pointer">Report product</u>
+        </div>
+        <div className="flex border-b-2 border-gray-300 pb-5">
+          <div className="basis-1/4 text-lg underline">
+            <p>Beautiful bed</p>
+            <p>Comfortable bed</p>
+            <p>Royal bed</p>
+            <p>Modern bed</p>
+            <p>Bed with drawer</p>
+            <p>Bed with comfortable mattress and pillows</p>
+          </div>
+          <div className="basis-1/4 text-lg underline">
+            <p>Cheap quality bed</p>
+            <p>Bed for life and comfort</p>
+            <p>Combo set of bed</p>
+            <p>Bed with LED</p>
+            <p>Beautiful bed design</p>
+            <p>City bed</p>
+          </div>
+          <div className="basis-1/4 text-lg underline">
+            <p>Beautiful bed</p>
+            <p>Comfortable bed</p>
+            <p>Royal bed</p>
+            <p>Modern bed</p>
+            <p>Bed with drawer</p>
+            <p>Bed with comfortable mattress and pillows</p>
+          </div>
+          <div className="basis-1/4 text-lg underline">
+            <p>Cheap quality bed</p>
+            <p>Bed for life and comfort</p>
+            <p>Combo set of bed</p>
+            <p>Bed with LED</p>
+            <p>Beautiful bed design</p>
+            <p>City bed</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-2 pt-5">
+          <div className="text-xl font-bold">
+            See personalized recommendations
+          </div>
+          <button className="mx-auto block w-56 rounded-full bg-[#FFAD33] text-lg font-bold text-white hover:bg-opacity-60 active:bg-[#FFAD33]">
+            Sign In
+          </button>
+          <div>
+            Don&apos;t have an account?{" "}
+            <a href="#" className="text-[#0000AA] underline hover:text-red-500">
+              Sign up
+            </a>
+          </div>
+        </div>
       </section>
     </div>
   );
