@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="flex w-screen flex-col items-center bg-[#0071CE]">
+    <footer className="flex  flex-col items-center bg-[#0071CE]">
       <div className="flex h-72 w-full items-center justify-center">
         <div className="flex w-1/2">
           <div
@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="flex w-screen items-center justify-center gap-2 px-5">
+      <div className="flex  items-center justify-center gap-2 px-5">
         <img src="/src/assets/Logo.png" className="w-20 rounded-full" />
         <p className="font-[Oswald] text-5xl text-white">TechMart</p>
       </div>

@@ -16,7 +16,7 @@ export default function Header() {
     <header className="sticky top-0 z-[1001]">
       <div
         id="utilities"
-        className="flex h-[80px] w-screen justify-around bg-[#0071CE]"
+        className="flex h-[80px] justify-around bg-[#0071CE]"
       >
         <Link to="/">
           <div
@@ -82,7 +82,7 @@ export default function Header() {
 
       <div
         id="categories"
-        className="flex h-[50px] w-screen items-center justify-center bg-gray-200"
+        className="flex h-[50px] items-center justify-center bg-gray-200"
       >
         <div className="flex h-full w-5 flex-1 cursor-pointer items-center justify-center hover:bg-gray-400">
           <i className="fa-solid fa-bars"></i>
