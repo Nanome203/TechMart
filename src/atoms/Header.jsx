@@ -13,7 +13,7 @@ const categories = [
 
 export default function Header() {
   return (
-    <header>
+    <header className="sticky top-0 z-[1001]">
       <div
         id="utilities"
         className="flex h-[80px] w-screen justify-around bg-[#0071CE]"
