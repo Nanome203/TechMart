@@ -27,12 +27,18 @@ const Header = ({ searchQuery }) => {
 
       {/* Horizontal Line */}
       <hr className="my-4" style={{ borderColor: 'black' }} />
-
+      <div className='flex items-center justify-between'>
       {/* Search result section */}
       <div className="text-4xl">
         Result for <span className="text-4xl font-semibold">“{searchQuery || 'All'}”</span>
       </div>
-
+      <div className='bg-[#D9D9D9] text-black size-sm h-8 rounded-2xl text-center pt-1 me-5  '>
+        <span className='font-bold ms-2'>Sort by: </span>
+        <span className='font-medium me-2 '>Best Match </span>
+        <span className='me-2'>  <i class="fa-duotone fa-solid fa-circle-chevron-down"></i> </span>
+       
+      </div>
+      </div>
       {/* Horizontal Lines for separation */}
       <hr className="my-4" style={{ borderColor: 'black' }} />
     </header>

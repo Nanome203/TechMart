@@ -47,7 +47,8 @@ const Sidebar = ({ onFilterChange }) => {
 
   return (
     <aside className="w-1/6 h-full p-4 bg-gray-50 border-r">
-      <h2 className="text-xl font-semibold mb-4">Filter Option</h2>
+      <h1 className="text-xl font-semibold mb-4">Filter Option</h1>
+      <hr className="my-4" style={{ borderColor: 'black' }} />
 
       {/* Price Filter */}
       <div className="mb-6">
@@ -71,13 +72,14 @@ const Sidebar = ({ onFilterChange }) => {
         </div>
         <div className="flex justify-center">
           <button
-            className="px-4 py-2 mt-5 border border-gray-400 rounded text-sm hover:bg-gray-100"
+            className="px-4 py-2 mt-5 border border-[#1173BE] rounded-2xl text-sm text-[#1173BE] hover:bg-gray-200"
             onClick={resetPrice}
           >
             Clear
           </button>
         </div>
       </div>
+      <hr className="my-4" style={{ borderColor: 'black' }} />
 
       {/* Rating Filter */}
       <div className="mb-6">
@@ -99,18 +101,18 @@ const Sidebar = ({ onFilterChange }) => {
         </div>
         <div className="flex justify-center">
           <button
-            className="px-4 py-2 mt-5 border border-gray-400 rounded text-sm hover:bg-gray-100"
+            className="px-4 py-2 mt-5 border border-[#1173BE] rounded-2xl text-sm text-[#1173BE] hover:bg-gray-200"
             onClick={resetRating}
           >
             Clear
           </button>
         </div>
       </div>
-
+      <hr className="my-4" style={{ borderColor: 'black' }} />
       {/* Category Filter */}
       <div>
         <h3 className="text-lg font-medium">Category</h3>
-        <ul className="mt-2 bg-gray-300 h-[260px] overflow-y-auto">
+        <ul className="mt-2 bg-[#D9D9D9] h-[260px] overflow-y-auto">
           {['Livingroom', 'Bedroom', 'Furniture', 'Lamp', 'Table', 'Bed', 'Television', 'Carpet', 'Pillow', 'Sofa', 'Decoration'].map((category) => (
             <li key={category} className="flex items-center ms-2 mt-3 mb-3">
               <input
@@ -125,6 +127,7 @@ const Sidebar = ({ onFilterChange }) => {
           ))}
         </ul>
       </div>
+      <hr className="my-4" style={{ borderColor: 'black' }} />
     </aside>
   );
 };
