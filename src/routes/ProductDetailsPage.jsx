@@ -94,8 +94,8 @@ export default function ProductDetails() {
     },
   };
   return (
-    <div className="w-screen">
-      <section className="mx-3 mb-5 flex w-full gap-10 rounded-2xl bg-white p-5">
+    <div className="w-full">
+      <section className="mb-5 flex w-full gap-20 rounded-2xl bg-white p-5">
         {/* Images */}
         <div className="basis-1/3">
           <div className="relative w-full">
@@ -248,7 +248,7 @@ export default function ProductDetails() {
 
         {/* Buy button */}
         <div className="basis-1/3">
-          <div className="h-full w-11/12 rounded-xl bg-[#E5E5E5] bg-opacity-50 p-5">
+          <div className="mx-auto h-full w-11/12 rounded-xl bg-[#E5E5E5] bg-opacity-50 p-5">
             <section>
               <h1 className="text-3xl font-bold text-[#008500]">
                 Now $67.99{" "}
