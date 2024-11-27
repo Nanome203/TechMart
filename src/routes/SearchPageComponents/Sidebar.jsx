@@ -5,7 +5,21 @@ const Sidebar = ({ onFilterChange }) => {
   const [rating, setRating] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
+  // Xử lý khi thay đổi giá trị của Price
+  const handlePriceChange = (e, index) => {
+    const newPrice = [...price];
+    newPrice[index] = parseInt(e.target.value);
+    setPrice(newPrice);
 
+    // Gửi dữ liệu bộ lọc lên App
+    onFilterChange({ price: newPrice, rating, categories: selectedCategories });
+  };
+
+  // Xử lý khi thay đổi Rating
+  const handleRatingChange = (star) => {
+    setRating(star);
+    onFilterChange({ price, rating: star, categories: selectedCategories });
+  };
 
   // Xử lý khi thay đổi Category
   const handleCategoryChange = (category, isChecked) => {
@@ -15,7 +29,7 @@ const Sidebar = ({ onFilterChange }) => {
         : prevSelected.filter((item) => item !== category);
       
       // Gửi dữ liệu bộ lọc lên App
-      onFilterChange({categories: updatedCategories });
+      onFilterChange({ price, rating, categories: updatedCategories });
       return updatedCategories;
     });
   };
