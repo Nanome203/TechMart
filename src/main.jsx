@@ -7,6 +7,7 @@ import ProductDetails from "./routes/ProductDetailsPage.jsx";
 import ProfilePage from "./routes/Profile/index.jsx";
 import ErrorPage from "./routes/ErrorPage.jsx";
 import Payment from "./routes/Payment.jsx";
+import SearchPage from "./routes/SearchPage.jsx";
 
 const routerConfig = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const routerConfig = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment />,
+      },
+      {
+        path: "/searchpage",
+        element: <SearchPage />,
       },
     ],
     errorElement: <ErrorPage />,

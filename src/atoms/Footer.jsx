@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="flex w-screen items-center justify-center gap-2 px-5">
+      <div className="flex  items-center justify-center gap-2 px-5">
         <img src="/src/assets/Logo.png" className="w-20 rounded-full" />
         <p className="font-[Oswald] text-5xl text-white">TechMart</p>
       </div>
