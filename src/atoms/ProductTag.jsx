@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
+
 function ProductTag({
   name,
   image,
@@ -7,13 +9,25 @@ function ProductTag({
   originalPrice,
   discountPercentage,
 }) {
+  const [isFavorite, setIsFavorite] = useState(false); // State for heart color
+
+  const toggleFavorite = () => {
+    setIsFavorite((prev) => !prev); // Toggle the favorite state
+  };
+
   return (
     <div className="border-gray relative m-3 h-96 w-72 cursor-pointer rounded-xl border-2 bg-white p-5 hover:shadow-lg">
       <div className="absolute left-1 top-1 rounded-xl bg-red-600 px-2 py-1 text-center text-sm text-white">
         {discountPercentage}%
       </div>
-      <button className="absolute right-1 top-1 h-10 w-10 rounded-full border-[1px] border-gray-600 bg-white">
-        <i className="fa-regular fa-heart text-lg"></i>
+      <button
+        className="absolute right-1 top-1 h-10 w-10 rounded-full border-[1px] border-gray-600 bg-white"
+        onClick={toggleFavorite} // Handle click event
+      >
+        <i
+          className={`fa-${isFavorite ? "solid" : "regular"} fa-heart text-lg`}
+          style={{ color: isFavorite ? "red" : "inherit" }} // Change color if favorite
+        ></i>
       </button>
       <img src={image} className="mb-5 size-48 w-full object-contain" />
       <div className="mx-1 line-clamp-3 w-full font-bold active:text-red-500">

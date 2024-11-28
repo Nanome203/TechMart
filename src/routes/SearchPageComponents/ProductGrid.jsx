@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ProductCard from '../../atoms/ProductCard';
-import Pagination from '../../atoms/Pagination';
+import React, { useState } from "react";
+import Pagination from "../../atoms/Pagination";
+import ProductTag from "../../atoms/ProductTag";
 
 // Số lượng sản phẩm trên mỗi trang
 const PRODUCTS_PER_PAGE = 20;
@@ -8,11 +8,12 @@ const PRODUCTS_PER_PAGE = 20;
 // Data sản phẩm giả lập
 const products = Array.from({ length: 500 }).map((_, index) => ({
   id: index + 1,
-  name: ``,
-  description: "",
-  price: ``,
-  oldPrice: ``,
-  image: "",
+  name: `Sofa ${index + 1}`,
+  description: "Ngon bo re",
+  price: 20 + index, // Giá hiện tại
+  oldPrice: 25 + index, // Giá cũ
+  image: "", // URL ảnh
+  stars: (Math.random() * 5).toFixed(1), // Xếp hạng ngẫu nhiên
 }));
 
 const ProductGrid = () => {
@@ -36,25 +37,33 @@ const ProductGrid = () => {
   return (
     <div className="w-3/4 p-4">
       {/* Phần hiển thị thông tin số lượng sản phẩm */}
-      <div className='mb-5'>
-        <span className='text-xl font-sm me-1'>Show</span>
-        <span className='text-xl font-semibold me-1'>
-          {startIndex + 1}-{Math.min(endIndex, products.length)} {/* Hiển thị số sản phẩm trên trang */}
+      <div className="mb-5">
+        <span className="font-sm me-1 text-xl">Show</span>
+        <span className="me-1 text-xl font-semibold">
+          {startIndex + 1}-{Math.min(endIndex, products.length)}{" "}
+          {/* Hiển thị số sản phẩm trên trang */}
         </span>
-        <span className='text-xl font-sm me-1'>
+        <span className="font-sm me-1 text-xl">
           of over {products.length} results {/* Tổng số sản phẩm */}
         </span>
       </div>
 
       {/* Lưới sản phẩm */}
-      <div className="grid grid-cols-5 gap-3">
+      <div className="grid grid-cols-5 gap-x-28 gap-y-3">
         {productsToShow.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductTag
+            discountPercentage={50}
+            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
+            stars={5}
+            discountedPrice={100}
+            originalPrice={200}
+          />
         ))}
       </div>
 
       {/* Phân trang */}
-      <div className="p-10 flex justify-center">
+      <div className="flex justify-center p-10">
         <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
