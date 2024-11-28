@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Pagination from '../../atoms/Pagination';
-import ProductTag from '../../atoms/ProductTag';
+import React, { useState } from "react";
+import Pagination from "../../atoms/Pagination";
+import ProductTag from "../../atoms/ProductTag";
 
 // Số lượng sản phẩm trên mỗi trang
 const PRODUCTS_PER_PAGE = 20;
@@ -38,11 +38,12 @@ const ProductGrid = () => {
     <div className="w-3/4 p-4">
       {/* Phần hiển thị thông tin số lượng sản phẩm */}
       <div className="mb-5">
-        <span className="text-xl font-sm me-1">Show</span>
-        <span className="text-xl font-semibold me-1">
-          {startIndex + 1}-{Math.min(endIndex, products.length)} {/* Hiển thị số sản phẩm trên trang */}
+        <span className="font-sm me-1 text-xl">Show</span>
+        <span className="me-1 text-xl font-semibold">
+          {startIndex + 1}-{Math.min(endIndex, products.length)}{" "}
+          {/* Hiển thị số sản phẩm trên trang */}
         </span>
-        <span className="text-xl font-sm me-1">
+        <span className="font-sm me-1 text-xl">
           of over {products.length} results {/* Tổng số sản phẩm */}
         </span>
       </div>
@@ -50,19 +51,19 @@ const ProductGrid = () => {
       {/* Lưới sản phẩm */}
       <div className="grid grid-cols-5 gap-x-28 gap-y-3">
         {productsToShow.map((product) => (
-          <ProductTag   
-              discountPercentage={50}
-              image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-              name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-              stars={5}
-              discountedPrice={100}
-              originalPrice={200}
+          <ProductTag
+            discountPercentage={50}
+            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
+            stars={5}
+            discountedPrice={100}
+            originalPrice={200}
           />
         ))}
       </div>
 
       {/* Phân trang */}
-      <div className="p-10 flex justify-center">
+      <div className="flex justify-center p-10">
         <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
