@@ -57,14 +57,14 @@ const Sidebar = ({ onFilterChange }) => {
           <span>$0</span>
           <span>$250+</span>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 ">
           <input
             type="range"
             min="0"
             max="250"
             value={price[0]}
             onChange={(e) => handlePriceChange(e, 0)}
-            className="w-full"
+            className="w-full cursor-pointer"
           />
         </div>
         <div className="text-center text-sm mt-2">
