@@ -8,12 +8,17 @@ import ProfilePage from "./routes/Profile/index.jsx";
 import ErrorPage from "./routes/ErrorPage.jsx";
 import Payment from "./routes/Payment.jsx";
 import SearchPage from "./routes/SearchPage.jsx";
+import HomePage from "./routes/HomePage.jsx";
 
 const routerConfig = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
+      {
+        path: "/homepage",
+        element: <HomePage />,
+      },
       {
         path: "/products",
         element: <ProductDetails />,
