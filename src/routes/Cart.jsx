@@ -1,77 +1,128 @@
 import React, { useState } from "react";
-import CartItem from "./CartItem.jsx"; // Ensure this file exists and is correct
+import CartItem from "./CartItem.jsx";
 import Footersignup from "../atoms/Footersignup";
+import ProductTag from "../atoms/ProductTag.jsx";
 
-// Hàm tính toán ngày giao hàng
 const calculateShippingDates = () => {
   const today = new Date();
 
-  // Tính ngày bắt đầu (today + 2 ngày)
   const startDate = new Date(today);
   startDate.setDate(today.getDate() + 2);
 
-  // Tính ngày kết thúc (startDate + 2 ngày)
   const endDate = new Date(startDate);
   endDate.setDate(startDate.getDate() + 2);
 
-  // Định dạng ngày với các tùy chọn
-  const formatDate = (date) => {
-    return new Intl.DateTimeFormat("en-US", {
+  const formatDate = (date) =>
+    new Intl.DateTimeFormat("en-US", {
       weekday: "short",
       month: "short",
       day: "numeric",
     }).format(date);
-  };
 
-  // Định dạng ngày bắt đầu và ngày kết thúc
-  const startFormatted = formatDate(startDate);
-  const endFormatted = formatDate(endDate);
-
-  return { startFormatted, endFormatted };
+  return { startFormatted: formatDate(startDate), endFormatted: formatDate(endDate) };
 };
 
 const Cart = () => {
   const { startFormatted, endFormatted } = calculateShippingDates();
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const products = [
+  const [products, setProducts] = useState([
     {
       id: 1,
       name: "Exclusive Royal Sofa Set",
-      price: "139.00",
+      price: 139.0,
+      originalPrice: 180.0,
       color: "Mint",
       quantity: 1,
-      extraDetails:
-        "Features high-density foam cushions, sturdy hardwood frame, and hand-stitched detailing for lasting elegance.",
-      image: "https://via.placeholder.com/80",
-      onIncrease: () => console.log("Increase quantity for product 1"),
-      onDecrease: () => console.log("Decrease quantity for product 1"),
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKJ74nRT0_7Krib7ZUAS3kRx76sc6xL590bQ&s",
     },
     {
       id: 2,
       name: "Elegant Coffee Table Decor Set",
-      price: "89.00",
+      price: 89.0,
+      originalPrice: 120.0,
       color: "Ivory white",
       quantity: 1,
-      extraDetails:
-        "Includes a decorative tray, artificial succulent, and candle holder for a complete look.",
-      image: "https://via.placeholder.com/80",
-      onIncrease: () => console.log("Increase quantity for product 2"),
-      onDecrease: () => console.log("Decrease quantity for product 2"),
+      image: "https://m.media-amazon.com/images/I/81lxJCa-JBL.jpg",
     },
     {
       id: 3,
       name: "Contemporary Modern Chair Set",
-      price: "125.00",
+      price: 125.0,
+      originalPrice: 150.0,
       color: "Midnight blue",
       quantity: 1,
-      extraDetails:
-        "Built with ergonomic support, soft upholstery, and a sleek metal frame for durability and comfort.",
-      image: "https://via.placeholder.com/80",
-      onIncrease: () => console.log("Increase quantity for product 3"),
-      onDecrease: () => console.log("Decrease quantity for product 3"),
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhuA-tmiyt3MGr3BNortsuxGGizg4CZAfesw&s",
     },
-  ];
+  ]);
+
+  const [suggestedProducts] = useState([
+    {
+      id: 4,
+      name: "Modern Area Rug",
+      price: 75.99,
+      originalPrice: 120.0,
+      image: "https://m.media-amazon.com/images/I/91dkdJdaM3L._AC_UF894,1000_QL80_.jpg",
+    },
+    {
+      id: 5,
+      name: "Minimalist Desk Lamp",
+      price: 45.0,
+      originalPrice: 60.0,
+      image: "https://down-vn.img.susercontent.com/file/sg-11134201-7rbm4-lqfkclongnvieb",
+    },
+    {
+      id: 6,
+      name: "Elegant Wall Clock",
+      price: 50.0,
+      originalPrice: 85.0,
+      image: "https://images-na.ssl-images-amazon.com/images/I/61Z+u9Px7XL.jpg",
+    },
+    {
+      id: 7,
+      name: "Elegant Wall Clock",
+      price: 50.0,
+      originalPrice: 85.0,
+      image: "https://images-na.ssl-images-amazon.com/images/I/61Z+u9Px7XL.jpg",
+    },
+
+  ]);
+
+  const updateQuantity = (id, change) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === id
+          ? { ...product, quantity: Math.max(1, product.quantity + change) }
+          : product
+      )
+    );
+  };
+
+  const removeItem = (id) => {
+    setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+  };
+
+  const calculateSubtotal = () => {
+    return products
+      .reduce((total, product) => total + product.originalPrice * product.quantity, 0)
+      .toFixed(2);
+  };
+
+  const calculateSavings = () => {
+    return products
+      .reduce(
+        (total, product) =>
+          total + (product.originalPrice - product.price) * product.quantity,
+        0
+      )
+      .toFixed(2);
+  };
+
+  const calculateTotal = () => {
+    return products
+      .reduce((total, product) => total + product.price * product.quantity, 0)
+      .toFixed(2);
+  };
 
   return (
     <div>
@@ -85,27 +136,23 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="bg-white rounded-lg shadow p-4">
             <div className="bg-blue-100 p-4 rounded-lg my-4">
-                
               <span className="text-l font-medium">
-                Free shipping, arrives between <b>{startFormatted}</b> –{" "}
-                <b>{endFormatted}</b>
+                Free shipping, arrives between <b>{startFormatted}</b> – <b>{endFormatted}</b>
               </span>
             </div>
 
-            {/* Header: Thu gọn */}
+            {/* Header: Expand/Collapse */}
             <div
               className="flex justify-between items-center cursor-pointer"
               onClick={() => setIsExpanded(!isExpanded)}
             >
-              <div className="text-lg font-semibold">
-                {products.length} items
-              </div>
+              <div className="text-lg font-semibold">{products.length} items</div>
               <button className="text-gray-500 text-2xl focus:outline-none">
                 {isExpanded ? "▲" : "▼"}
               </button>
             </div>
 
-            {/* Hình ảnh sản phẩm: Hiển thị khi thu gọn */}
+            {/* Collapsed Images */}
             {!isExpanded && (
               <div className="flex space-x-2 mt-3">
                 {products.map((product) => (
@@ -119,11 +166,17 @@ const Cart = () => {
               </div>
             )}
 
-            {/* Danh sách chi tiết: Hiển thị khi xổ ra */}
+            {/* Expanded Product List */}
             {isExpanded && (
               <div className="mt-4 space-y-4">
                 {products.map((product) => (
-                  <CartItem key={product.id} product={product} />
+                  <CartItem
+                    key={product.id}
+                    product={product}
+                    onIncrease={() => updateQuantity(product.id, 1)}
+                    onDecrease={() => updateQuantity(product.id, -1)}
+                    onRemove={() => removeItem(product.id)}
+                  />
                 ))}
               </div>
             )}
@@ -136,28 +189,18 @@ const Cart = () => {
               <button className="text-blue-500 font-medium">See all</button>
             </div>
             <div className="flex space-x-4 overflow-x-auto">
-              {/* Product Card */}
-              {Array.from({ length: 3 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col bg-white shadow rounded-lg p-3 w-56"
-                >
-                  <img
-                    src="https://via.placeholder.com/150"
-                    alt="Product"
-                    className="rounded-lg mb-3 h-40 object-cover"
-                  />
-                  <div className="text-sm font-semibold">
-                    City Scene - Queen Comforter Set, Smooth & ...
-                  </div>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-green-500 font-bold">$60.99</span>
-                    <span className="line-through text-gray-400">$149.99</span>
-                  </div>
-                  <button className="mt-2 bg-blue-500 text-white text-sm py-1 px-2 rounded-lg">
-                    Add
-                  </button>
-                </div>
+              {suggestedProducts.map((product) => (
+                <ProductTag
+                  key={product.id}
+                  name={product.name}
+                  image={product.image}
+                  stars={4.5}
+                  discountedPrice={product.price}
+                  originalPrice={product.originalPrice}
+                  discountPercentage={Math.round(
+                    ((product.originalPrice - product.price) / product.originalPrice) * 100
+                  )}
+                />
               ))}
             </div>
           </div>
@@ -169,20 +212,17 @@ const Cart = () => {
             Continue to checkout
           </button>
           <div className="flex justify-between text-gray-500 text-20 mb-2">
-            <span>Subtotal (3 items)</span>
-            <span className="line-through">$380.00</span>
+            <span>Subtotal ({products.length} items)</span>
+            <span className="text-lg font-semibold line-through">${calculateSubtotal()}</span>
           </div>
           <div className="flex justify-between text-gray-500 text-20 mb-2">
-            <span>Savings</span>
-            <span className="text-green-500 bg-[#DFDFDF] rounded p-1 text-20 font-semibold">
-              -$11.00
-            </span>
+            <span>Saving</span>
+            <span className="text-lg font-semibold text-green-500">${calculateSavings()}</span>
           </div>
           <div className="flex justify-between text-gray-500 text-20 mb-2">
             <span></span>
-            <span className="text-green-500 font-semibold">$369.00</span>
+            <span className="text-lg font-semibold">${calculateTotal()}</span>
           </div>
-
           <hr className="my-2" />
           <div className="flex justify-between text-gray-500 text-20 mb-2">
             <span>Shipping</span>
@@ -195,7 +235,7 @@ const Cart = () => {
           <hr className="my-2" />
           <div className="flex justify-between font-semibold text-lg">
             <span>Estimated total</span>
-            <span>$369.00</span>
+            <span>${calculateTotal()}</span>
           </div>
         </div>
       </div>
