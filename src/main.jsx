@@ -9,12 +9,18 @@ import ErrorPage from "./routes/ErrorPage.jsx";
 import Payment from "./routes/Payment.jsx";
 import SearchPage from "./routes/SearchPage.jsx"; 
 import Cart from "./routes/Cart.jsx"; 
+import HomePage from "./routes/HomePage.jsx";
+import TestPage from "./routes/TestPage.jsx";
 
 const routerConfig = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
       {
         path: "/products",
         element: <ProductDetails />,
@@ -34,6 +40,10 @@ const routerConfig = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/test",
+        element: <TestPage/>,
       },
     ],
     errorElement: <ErrorPage />,
