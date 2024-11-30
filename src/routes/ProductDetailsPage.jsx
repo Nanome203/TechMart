@@ -8,15 +8,6 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../atoms/Spinner";
 
-// export async function loader({ params: { id } }) {
-//   const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
-//   const response = await axios.get(
-//     `${BASE_URL}/api/product-description/${id}}`,
-//   );
-
-//   console.log(response);
-// }
-
 export default function ProductDetails() {
   const location = useLocation();
   const { id, name, image } = location.state;
@@ -188,36 +179,41 @@ export default function ProductDetails() {
           </div>
           <div className="w-full">
             <h1 className="text-2xl">Options</h1>
-            <ul className="list-inside list-disc">
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-            </ul>
+            {description ? (
+              <ul className="list-inside list-disc">
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+              </ul>
+            ) : (
+              <Spinner size="text-4xl" />
+            )}
+
             <hr className="my-5 border-y-2" />
           </div>
         </div>
