@@ -16,7 +16,7 @@ const routerConfig = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        index,
+        index: true,
         element: <HomePage />,
       },
       {
