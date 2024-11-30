@@ -10,6 +10,7 @@ import Payment from "./routes/Payment.jsx";
 import SearchPage from "./routes/SearchPage.jsx";
 import HomePage from "./routes/HomePage.jsx";
 import TestPage from "./routes/TestPage.jsx";
+import Cart from "./routes/Cart.jsx";
 
 const routerConfig = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const routerConfig = createBrowserRouter([
       {
         path: "/test",
         element: <TestPage />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <ErrorPage />,
