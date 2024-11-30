@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Login from "./Login.jsx";
 const categories = [
   "Events",
   "Kitchen Utensils",
@@ -12,6 +14,16 @@ const categories = [
 ];
 
 export default function Header() {
+  const [isSigninVisible, setSigninVisible] = useState(false);
+
+  const handleOpenSignin = () => {
+    setSigninVisible(true);
+  };
+
+  const handleCloseSignin = () => {
+    setSigninVisible(false);
+  };
+
   return (
     <header className="sticky top-0 z-[1001] w-full">
       <div
@@ -68,7 +80,9 @@ export default function Header() {
 
           <div id="sign-in-wrapper" className="text-white">
             <p>Welcome, need to</p>
-            <p className="font-bold">Sign in?</p>
+            <p className="font-bold" onClick={handleOpenSignin}>
+              Sign in?
+            </p>
           </div>
         </div>
         <div
@@ -96,6 +110,7 @@ export default function Header() {
           </div>
         ))}
       </div>
+      <Login isVisible={isSigninVisible} onClose={handleCloseSignin} />
     </header>
   );
 }
