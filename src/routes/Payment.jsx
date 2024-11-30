@@ -15,7 +15,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const DialogPopup = ({ props }) => {
@@ -41,11 +41,21 @@ const DialogPopup = ({ props }) => {
           >
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
-                <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
-                  <FaExclamationCircle
-                    aria-hidden="true"
-                    className="size-6 text-red-600"
-                  />
+                <div
+                  className={`mx-auto flex size-12 shrink-0 items-center justify-center rounded-full ${props.modalType === "error" ? "bg-red-200" : "bg-green-200"} sm:mx-0 sm:size-10`}
+                >
+                  {props.modalType === "error" && (
+                    <FaExclamationCircle
+                      aria-hidden="true"
+                      className="size-6 text-red-600"
+                    />
+                  )}
+                  {props.modalType === "success" && (
+                    <FaCheck
+                      aria-hidden="true"
+                      className="size-6 text-green-600"
+                    />
+                  )}
                 </div>
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                   <DialogTitle
@@ -117,26 +127,31 @@ const PaymentReceipt = ({ props }) => {
 };
 
 export default function Payment() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const param = location.state?.products;
   // -- Payment logic state --
-  const { id } = useParams();
   const [progress, setProgress] = React.useState(0);
-  const [dataPayment, setDataPayment] = React.useState(0);
+  const [dataPayment, setDataPayment] = React.useState();
   const [modal, setModal] = React.useState({
     isOpened: false,
     title: "",
     description: "",
+    modalType: "",
   });
   // -- Retrieve the id price from the database
   React.useEffect(() => {
-    const handleItemProduct = async () => {
-      const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
-      const description_response = await axios.get(
-        `${BASE_URL}/api/product/${id}`,
-      );
-      setDataPayment(description_response.data.product);
+    const getPrice = () => {
+      let price = 0;
+      for (let i = 0; i < param.length; i++) {
+        price = price + param[i].price * param[i].quantity;
+      }
+      return price;
     };
-    handleItemProduct();
-  }, [id]);
+
+    setDataPayment(getPrice);
+    console.log(dataPayment);
+  }, [param]);
 
   // -- Delivery & Pickup Option --
   const [deliveryPlan, setDeliveryPlan] = React.useState("delivery_normal");
@@ -210,6 +225,7 @@ export default function Payment() {
               isOpened: true,
               title: "Invalid Address",
               description: "Please fill the TechMart store address!",
+              modalType: "error",
             });
             return;
           }
@@ -218,6 +234,7 @@ export default function Payment() {
               isOpened: true,
               title: "Invalid Pickup Date",
               description: "Please choose the pickup date!",
+              modalType: "error",
             });
             return;
           }
@@ -243,12 +260,14 @@ export default function Payment() {
                 isOpened: true,
                 title: "Invalid email",
                 description: "Please enter the email correctly.",
+                modalType: "error",
               });
             else
               setModal({
                 isOpened: true,
                 title: "Missing field in confirm delivery address",
                 description: "Please fill all the required field.",
+                modalType: "error",
               });
             return;
           }
@@ -269,12 +288,14 @@ export default function Payment() {
                 isOpened: true,
                 title: "Invalid email",
                 description: "Please enter the email correctly.",
+                modalType: "error",
               });
             else
               setModal({
                 isOpened: true,
                 title: "Missing field in pickup person",
                 description: "Please fill all the required field.",
+                modalType: "error",
               });
             return;
           }
@@ -301,6 +322,7 @@ export default function Payment() {
                   title: "Invalid credit card expiration date",
                   description:
                     "Please enter the credit card expiration date correctly.",
+                  modalType: "error",
                 });
               else
                 setModal({
@@ -322,12 +344,14 @@ export default function Payment() {
                   isOpened: true,
                   title: "Invalid Paypal email",
                   description: "Please enter the valid Paypal email.",
+                  modalType: "error",
                 });
               else
                 setModal({
                   isOpened: true,
                   title: "Missing field in Paypal payment",
                   description: "Please fill all the required field.",
+                  modalType: "error",
                 });
               return;
             }
@@ -339,12 +363,14 @@ export default function Payment() {
                   isOpened: true,
                   title: "Invalid Pay UPI email",
                   description: "Please enter the valid Pay UPI email.",
+                  modalType: "error",
                 });
               else
                 setModal({
                   isOpened: true,
                   title: "Missing field in Pay UPI",
                   description: "Please fill all the required field.",
+                  modalType: "error",
                 });
               return;
             }
@@ -367,7 +393,19 @@ export default function Payment() {
   };
 
   // -- Handle Payment Method with database here --
-
+  const [popupSuccess, setPopupSuccess] = React.useState(false);
+  const handleRedirect = () => {
+    setModal({
+      isOpened: true,
+      title: "Pay successfully",
+      description:
+        "Thank you for using our serive. Redirect to home page in 5 seconds...",
+      modalType: "success",
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, 5000);
+  };
   // -- Render the web --
   return (
     <>
@@ -378,6 +416,7 @@ export default function Payment() {
             description: modal.description,
             isOpened: modal.isOpened,
             onClose: handleCloseModal,
+            modalType: modal.modalType,
           }}
         />
       )}
@@ -551,7 +590,7 @@ export default function Payment() {
               </div>
               <PaymentReceipt
                 props={{
-                  subtotal: dataPayment.price,
+                  subtotal: dataPayment,
                   delivery: 0.0,
                   tax: 5.22,
                 }}
@@ -787,7 +826,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: dataPayment.price,
+                    subtotal: dataPayment,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -881,7 +920,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: dataPayment.price,
+                    subtotal: dataPayment,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -1163,7 +1202,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: dataPayment.price,
+                    subtotal: dataPayment,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -1187,9 +1226,7 @@ export default function Payment() {
               className={
                 "mr-5 w-32 rounded-2xl border-2 bg-blue-500 px-5 py-2 text-lg text-white"
               }
-              onClick={() => {
-                /* Handle payment here or define callback function */
-              }}
+              onClick={handleRedirect}
             >
               Pay Now
             </button>

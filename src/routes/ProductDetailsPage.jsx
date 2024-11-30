@@ -254,10 +254,7 @@ export default function ProductDetails() {
                 <button className="h-14 w-10/12 rounded-full border-2 border-[#1173BE] text-xl font-bold text-[#1173BE] hover:bg-[#1173BE] hover:text-white active:bg-blue-500">
                   Add to Cart
                 </button>
-                <button
-                  className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700"
-                  onClick={() => navigation(`/payment/${id}`)}
-                >
+                <button className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700">
                   Buy now
                 </button>
               </div>
