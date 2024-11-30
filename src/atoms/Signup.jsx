@@ -1,9 +1,13 @@
-import React, { forwardRef } from "react";
-
-export default function Signup() {
+export default function Signup({ isVisible, onClose, switchToLogIn }) {
   return (
-    <section className="z-99 fixed left-1/2 top-[120px] flex w-[500px] -translate-x-1/2 transform flex-col items-center gap-4 rounded-2xl bg-gray-100 p-4">
-      <i className="fa-solid fa-x cursor-pointer self-end text-2xl hover:text-red-500"></i>
+    <section
+      onClick={(e) => e.stopPropagation()}
+      className={`${!isVisible && "hidden"} z-99 animate-in slide-in-from-top flex w-[500px] cursor-default flex-col items-center gap-2 rounded-2xl bg-gray-100 p-4 duration-300`}
+    >
+      <i
+        className="fa-solid fa-x cursor-pointer self-end text-2xl hover:text-red-500"
+        onClick={onClose}
+      ></i>
 
       <h2 className="mb-2 text-center text-2xl font-semibold">Sign Up</h2>
 
@@ -156,12 +160,12 @@ export default function Signup() {
 
       <div className="mb-2">
         Already had an account?
-        <a
-          href="#"
+        <button
+          onClick={switchToLogIn}
           className="ml-1 font-semibold text-blue-600 underline hover:italic hover:no-underline"
         >
           Log In
-        </a>
+        </button>
       </div>
     </section>
   );

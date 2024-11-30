@@ -1,9 +1,10 @@
-import React, { forwardRef } from "react";
-
-export default function Login({ isVisible, onClose }) {
+export default function Login({ isVisible, onClose, switchToSignUp }) {
   return (
     <section
-      className={` ${isVisible ? "" : "hidden"} z-99 fixed left-1/2 top-[120px] flex w-[500px] -translate-x-1/2 transform flex-col items-center gap-4 rounded-2xl bg-gray-100 p-4`}
+      className={` ${isVisible ? "" : "hidden"} animate-in slide-in-from-top z-99 flex w-[500px] cursor-default flex-col items-center gap-4 rounded-2xl bg-gray-100 p-4`}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <i
         className="fa-solid fa-x cursor-pointer self-end text-2xl hover:text-red-500"
@@ -47,35 +48,35 @@ export default function Login({ isVisible, onClose }) {
       <div className="flex w-[390px] items-center justify-between">
         <div className="inline-flex items-center">
           <label
-            class="relative flex cursor-pointer items-center rounded-full p-3"
-            for="ripple-on"
+            className="relative flex cursor-pointer items-center rounded-full p-3"
+            htmlFor="ripple-on"
             data-ripple-dark="true"
           >
             <input
               id="ripple-on"
               type="checkbox"
-              class="peer relative h-5 w-5 cursor-pointer appearance-none rounded border border-slate-300 shadow transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-slate-400 before:opacity-0 before:transition-opacity checked:border-slate-800 checked:bg-slate-800 checked:before:bg-slate-400 hover:shadow-md hover:before:opacity-10"
+              className="peer relative h-5 w-5 cursor-pointer appearance-none rounded border border-slate-300 shadow transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-slate-400 before:opacity-0 before:transition-opacity checked:border-slate-800 checked:bg-slate-800 checked:before:bg-slate-400 hover:shadow-md hover:before:opacity-10"
             />
-            <span class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
+            <span className="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-3.5 w-3.5"
+                className="h-3.5 w-3.5"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 stroke="currentColor"
-                stroke-width="1"
+                strokeWidth="1"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </span>
           </label>
           <label
-            class="cursor-pointer text-[12px] text-sm text-slate-600"
-            for="ripple-on"
+            className="cursor-pointer text-[12px] text-sm text-slate-600"
+            htmlFor="ripple-on"
           >
             Remberber me
           </label>
@@ -119,12 +120,12 @@ export default function Login({ isVisible, onClose }) {
 
       <div className="mb-2">
         Don’t have an account?
-        <a
-          href="#"
+        <button
           className="ml-1 font-semibold text-blue-600 underline hover:italic hover:no-underline"
+          onClick={switchToSignUp}
         >
           Sign Up
-        </a>
+        </button>
       </div>
     </section>
   );
