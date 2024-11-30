@@ -1,65 +1,41 @@
 import ProductTag from "../atoms/ProductTag";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
-const Stars = ({ className }) => {
-  return (
-    <>
-      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
-      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
-      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
-      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
-      <i className={`fa-solid fa-star text-[#FCAC00] ${className}`}></i>
-    </>
-  );
-};
-
-const Review = () => (
-  <div className="w-full border-b-2 border-gray-200 p-5">
-    <div>March 25, 2024</div>
-    <div className="flex">
-      <div className="basis-1/4 space-y-1">
-        <div className="flex items-center gap-2 text-xl font-bold">
-          <i className="fa-regular fa-circle-user text-2xl"></i>
-          John Doe
-        </div>
-        <div className="font-bold">Item details</div>
-        <div>
-          <p>Bed size: King</p>
-          <p>Color: Gray</p>
-        </div>
-        <div className="font-bold">Sold by</div>
-        <div>TechMart.com</div>
-      </div>
-      <div className="basis-3/5 space-y-1">
-        <div className="flex items-center gap-2">
-          <Stars className={"text-lg"} />{" "}
-          <span className="font-bold">Verified Purchase</span>{" "}
-          <i className="fa-solid fa-circle-info"></i>
-        </div>
-        <div className="font-bold">High quality bed for modern bedroom!</div>
-        <p>
-          A really good bed that with high quality set of comfortable mattress
-          and pillows. It is really worth to buy. I’m glad that I discovered
-          this match for my bedroom. Also it is really beautiful and come in
-          handy for sleeping.
-        </p>
-        <div className="flex items-center gap-5 py-5">
-          <div>Helpful review?</div>
-          <div className="text-md flex items-center gap-2">
-            <i className="fa-regular fa-thumbs-up text-xl"></i>9
-          </div>
-          <div className="text-md flex items-center gap-2">
-            <i className="fa-regular fa-thumbs-down text-xl"></i>2
-          </div>
-          <div className="border-l-2 border-gray-500 px-5">Report</div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import Stars from "../atoms/Stars";
+import Review from "../atoms/Review";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Spinner from "../atoms/Spinner";
 
 export default function ProductDetails() {
+  const location = useLocation();
+  const { id, name, image } = location.state;
+  const [description, setDescription] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState(null);
+  useEffect(() => {
+    setRelatedProducts(null);
+    setDescription(null);
+    const fetchData = async () => {
+      const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
+      const description_response = await axios.get(
+        `${BASE_URL}/api/product-description/${id}`,
+      );
+      const related_products_response = await axios.get(
+        `${BASE_URL}/api/related-items/${id}?top_n=11`,
+      );
+      const array = [];
+      for (let key in Object.keys(
+        related_products_response.data.related_items,
+      )) {
+        array.push(related_products_response.data.related_items[key]);
+      }
+      setDescription(description_response.data.product_description);
+      // setRelatedProducts(related_products_response.data.related_items);
+      setRelatedProducts(array);
+    };
+    fetchData();
+  }, [id]);
   const responsive = {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
@@ -100,9 +76,10 @@ export default function ProductDetails() {
         <div className="basis-1/3">
           <div className="relative w-full">
             <img
-              src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              src={image}
               alt="sofa"
-              className="mb-3 w-full rounded-3xl border-2 border-gray-300 object-contain"
+              className="mb-3 aspect-square w-full rounded-3xl border-2 border-gray-300 object-contain p-5"
             />
             <div className="absolute -right-5 top-1/2 size-10 cursor-pointer rounded-full border-2 border-black transition-all">
               <div className="flex size-full items-center justify-center">
@@ -131,35 +108,35 @@ export default function ProductDetails() {
           </div>
           <div className="flex w-full items-center justify-center gap-5">
             <img
-              src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              src={image}
               alt="sofa"
-              className="w-20 rounded-3xl border-8 border-[#0071CE] object-contain"
+              className="aspect-square w-20 rounded-3xl border-2 border-[#0071CE] object-contain"
             />
             <img
-              src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              src={image}
               alt="sofa"
-              className="w-20 rounded-3xl object-contain"
+              className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
             />
             <img
-              src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              src={image}
               alt="sofa"
-              className="w-20 rounded-3xl object-contain"
+              className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
             />
             <img
-              src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+              src={image}
               alt="sofa"
-              className="w-20 rounded-3xl object-contain"
-            />
-            <img
-              src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-              alt="sofa"
-              className="w-20 rounded-3xl object-contain"
+              className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
             />
             <div className="relative">
               <img
-                src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+                // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+                src={image}
                 alt="sofa"
-                className="w-20 rounded-3xl object-contain"
+                className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
               />
               <div className="absolute left-0 top-0 h-full w-full rounded-3xl bg-black bg-opacity-50">
                 <div className="flex h-full w-full items-center justify-center text-2xl text-white">
@@ -174,8 +151,9 @@ export default function ProductDetails() {
         <div className="basis-1/3">
           <div className="w-full">
             <h1 className="line-clamp-3 text-2xl">
-              City Scene - Queen Comforter Set, Smooth & Soft Bedding with
-              Matching Shams, Modern Home Decor (Courtney White, Queen)
+              {/* City Scene - Queen Comforter Set, Smooth & Soft Bedding with
+              Matching Shams, Modern Home Decor (Courtney White, Queen) */}
+              {name}
             </h1>
             <div>
               5.0 <Stars /> (259 ratings)
@@ -184,64 +162,58 @@ export default function ProductDetails() {
           </div>
           <div className="w-full">
             <h1 className="text-2xl">About this product</h1>
-            <ul className="w-full list-inside list-disc">
-              <li>
-                MATERIAL: 100% Microfiber Constructed Home Decor- with a soft
-                and cozy feel
-              </li>
-              <li>
-                INCLUDES: (1) Queen Comforter, (2) Standard Shams. Comforter
-                will fit full size mattress also.
-              </li>
-              <li>
-                FEATURES: Lofty polyester fill for extra warmth, without the
-                weight. Knife edge finish for tailored look. Sham features side
-                European closure. Modern decor that&apos;s perfect for
-                year-round use
-              </li>
-              <li>
-                DIMENSIONS: Queen Comforter (96&quot;L x 92&quot;W) and Two
-                Standard shams (21&quot;L x 27&quot;W)
-              </li>
-              <li>CARE: Machine washable for easy care</li>
-            </ul>
-            <u className="cursor-pointer font-bold hover:text-red-500">
-              View more
-            </u>
+            {description ? (
+              <>
+                <ul className="w-full list-inside list-disc">
+                  <li>{description}</li>
+                </ul>
+                <u className="cursor-pointer font-bold hover:text-red-500">
+                  View more
+                </u>
+              </>
+            ) : (
+              <Spinner size="text-4xl" />
+            )}
+
             <hr className="my-5 border-y-2" />
           </div>
           <div className="w-full">
             <h1 className="text-2xl">Options</h1>
-            <ul className="list-inside list-disc">
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-              <li>Unavailable</li>
-            </ul>
+            {description ? (
+              <ul className="list-inside list-disc">
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+                <li>Unavailable</li>
+              </ul>
+            ) : (
+              <Spinner size="text-4xl" />
+            )}
+
             <hr className="my-5 border-y-2" />
           </div>
         </div>
@@ -315,7 +287,7 @@ export default function ProductDetails() {
               <div className="my-5 flex w-full gap-2">
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-bolt-lightning text-5xl"></i>
-                  <h1 className="text-xl font-bold">Fast delivery</h1>
+                  <h1 className="text-lg font-bold">Fast delivery</h1>
                   <p className="h-20 text-center">
                     TechMart Premium+ Free charge for fast delivery. Take up to
                     2 days
@@ -323,14 +295,14 @@ export default function ProductDetails() {
                 </div>
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-truck text-5xl"></i>
-                  <h1 className="text-xl font-bold">Shipping</h1>
+                  <h1 className="text-lg font-bold">Shipping</h1>
                   <p className="h-20 text-center">
                     Casual delivery. Take 2 - 4 days to deliver.
                   </p>
                 </div>
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-car text-5xl"></i>
-                  <h1 className="text-xl font-bold">Pick up</h1>
+                  <h1 className="text-lg font-bold">Pick up</h1>
                   <p className="h-20 text-center">Go to the techMart store</p>
                 </div>
               </div>
@@ -364,96 +336,26 @@ export default function ProductDetails() {
         <h1 className="ml-3 text-3xl font-bold">
           Related items you may be interested
         </h1>
-        <Carousel responsive={responsive}>
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-          <ProductTag
-            discountPercentage={50}
-            image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-            stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-          />
-        </Carousel>
+        {relatedProducts === null ? (
+          <div className="h-96 w-full">
+            <Spinner size="text-6xl" />
+          </div>
+        ) : (
+          <Carousel responsive={responsive}>
+            {relatedProducts.map((product) => (
+              <ProductTag
+                key={product.product_id}
+                discountPercentage={50}
+                image={product.image}
+                name={product.descript}
+                stars={5}
+                discountedPrice={parseFloat(product.price).toFixed(2)}
+                originalPrice={200}
+                id={product.product_id}
+              />
+            ))}
+          </Carousel>
+        )}
       </section>
       <section className="mx-3 rounded-xl bg-white pb-5">
         <h1 className="p-5 text-3xl font-bold">Customer ratings & reviews</h1>

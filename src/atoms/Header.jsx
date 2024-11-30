@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Login from "./Login.jsx";
+import Signup from "./Signup.jsx";
 const categories = [
   "Events",
   "Kitchen Utensils",
@@ -12,6 +15,13 @@ const categories = [
 ];
 
 export default function Header() {
+  const [isSignInVisible, setSignInVisible] = useState(false);
+  const [isSignUpVisible, setIsSignUpVisible] = useState(false);
+
+  const handleCloseSignin = () => {
+    setSignInVisible(false);
+  };
+
   return (
     <header className="sticky top-0 z-[1001] w-full">
       <div
@@ -63,6 +73,7 @@ export default function Header() {
         <div
           id="sign-in"
           className="flex h-full cursor-pointer items-center gap-2 px-5"
+          onClick={() => setSignInVisible((prev) => !prev)}
         >
           <i className="fa-regular fa-user text-4xl text-white"></i>
 
@@ -95,6 +106,27 @@ export default function Header() {
             <p>{category}</p>
           </div>
         ))}
+      </div>
+      <div
+        className={`${!isSignInVisible && !isSignUpVisible && "hidden"} fixed left-0 top-0 flex h-screen w-screen cursor-pointer items-center justify-center bg-black bg-opacity-50`}
+        onClick={handleCloseSignin}
+      >
+        <Login
+          isVisible={isSignInVisible}
+          onClose={handleCloseSignin}
+          switchToSignUp={() => {
+            setIsSignUpVisible(true);
+            setSignInVisible(false);
+          }}
+        />
+        <Signup
+          isVisible={isSignUpVisible}
+          onClose={() => setIsSignUpVisible((prev) => !prev)}
+          switchToLogIn={() => {
+            setIsSignUpVisible(false);
+            setSignInVisible(true);
+          }}
+        />
       </div>
     </header>
   );
