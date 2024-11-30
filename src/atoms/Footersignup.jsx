@@ -1,3 +1,5 @@
+import Login from "./Login.jsx";
+import Signup from "./Signup.jsx";
 export default function Footersignup() {
     return (
         <div> <hr style={{ borderColor: 'black' }} />
