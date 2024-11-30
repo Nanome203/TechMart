@@ -4,12 +4,14 @@ import "react-multi-carousel/lib/styles.css";
 import Stars from "../atoms/Stars";
 import Review from "../atoms/Review";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../atoms/Spinner";
+import { Link } from "react-router-dom";
 
 export default function ProductDetails() {
   const location = useLocation();
+  const navigation = useNavigate();
   const { id, name, image } = location.state;
   const [description, setDescription] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
@@ -252,7 +254,10 @@ export default function ProductDetails() {
                 <button className="h-14 w-10/12 rounded-full border-2 border-[#1173BE] text-xl font-bold text-[#1173BE] hover:bg-[#1173BE] hover:text-white active:bg-blue-500">
                   Add to Cart
                 </button>
-                <button className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700">
+                <button
+                  className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700"
+                  onClick={() => navigation(`/payment/${id}`)}
+                >
                   Buy now
                 </button>
               </div>

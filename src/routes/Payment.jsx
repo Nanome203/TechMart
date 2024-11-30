@@ -15,6 +15,8 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const DialogPopup = ({ props }) => {
   const [open, setOpen] = React.useState(props.isOpened);
@@ -116,12 +118,26 @@ const PaymentReceipt = ({ props }) => {
 
 export default function Payment() {
   // -- Payment logic state --
+  const { id } = useParams();
   const [progress, setProgress] = React.useState(0);
+  const [dataPayment, setDataPayment] = React.useState(0);
   const [modal, setModal] = React.useState({
     isOpened: false,
     title: "",
     description: "",
   });
+  // -- Retrieve the id price from the database
+  React.useEffect(() => {
+    const handleItemProduct = async () => {
+      const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
+      const description_response = await axios.get(
+        `${BASE_URL}/api/product/${id}`,
+      );
+      setDataPayment(description_response.data.product);
+    };
+    handleItemProduct();
+  }, [id]);
+
   // -- Delivery & Pickup Option --
   const [deliveryPlan, setDeliveryPlan] = React.useState("delivery_normal");
   const [storeAddress, setStoreAddress] = React.useState("");
@@ -535,7 +551,7 @@ export default function Payment() {
               </div>
               <PaymentReceipt
                 props={{
-                  subtotal: 369.25,
+                  subtotal: dataPayment.price,
                   delivery: 0.0,
                   tax: 5.22,
                 }}
@@ -771,7 +787,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: 369.25,
+                    subtotal: dataPayment.price,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -865,7 +881,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: 369.25,
+                    subtotal: dataPayment.price,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -1147,7 +1163,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: 369.25,
+                    subtotal: dataPayment.price,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
