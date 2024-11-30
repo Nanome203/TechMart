@@ -86,8 +86,8 @@ export default function Header() {
           id="cart"
           className="flex h-full cursor-pointer flex-col items-center justify-center px-5"
         >
-          <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
-          <p className="text-sm text-white">$300</p>
+          <a href='/Cart'><i className="fa-solid fa-cart-shopping text-3xl text-white"></i></a>
+          <a href='/Cart' className="text-sm text-white">$0</a>
         </div>
       </div>
 
