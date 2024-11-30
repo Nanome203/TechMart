@@ -18,10 +18,6 @@ export default function Header() {
   const [isSignInVisible, setSignInVisible] = useState(false);
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);
 
-  const handleOpenSignin = () => {
-    setSignInVisible(true);
-  };
-
   const handleCloseSignin = () => {
     setSignInVisible(false);
   };
