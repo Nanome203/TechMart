@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { CiDeliveryTruck } from "react-icons/ci";
 import {
   FaCheck,
@@ -109,6 +109,26 @@ const PaymentReceipt = ({ props }) => {
           <span className={"underline"}>See more detail</span>{" "}
           <span className={"-pointer text-4xl"}>+</span>
         </p>
+      </div>
+    </div>
+  );
+};
+
+// Payment sucess modal dialog
+const PaymentSuccessModal = ({ onClose }) => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div className="w-80 rounded-lg bg-white p-8 text-center shadow-lg">
+        <h2 className="text-xl font-bold text-green-600">
+          Successful Payment!
+        </h2>
+        <p className="mt-4">Returning to the homepage in 5s.</p>
+        <button
+          className="mt-4 rounded-full bg-blue-500 px-6 py-2 text-white"
+          onClick={onClose}
+        >
+          Close
+        </button>
       </div>
     </div>
   );
@@ -350,7 +370,35 @@ export default function Payment() {
     setModal((prev) => ({ ...prev, isOpened: false }));
   };
 
-  // -- Handle Payment Method with database here --
+  // -- Handle Payment Method sucess with database here --
+  // const [paymentSuccess, setPaymentSuccess] = useState(false); // Quản lý trạng thái thanh toán thành công
+
+  // const handlePayment = () => {
+  //   // Hiển thị thông báo thanh toán thành công
+  //   setPaymentSuccess(true);
+
+  //   // Sau 5 giây, điều hướng về trang chủ
+  //   setTimeout(() => {
+  //     window.location.href = "http://localhost:5173/"; // Điều hướng đến trang chủ
+  //   }, 5000); // 5 giây
+  // };
+  const [paymentSuccess, setPaymentSuccess] = useState(false); // Quản lý trạng thái modal
+  const [loading, setLoading] = useState(false); // Quản lý trạng thái thanh toán
+
+  const handlePayment = () => {
+    setLoading(true);
+
+    // Mô phỏng thanh toán thành công
+    setTimeout(() => {
+      // Hiển thị modal thông báo thanh toán thành công
+      setPaymentSuccess(true);
+
+      // Sau 5 giây, điều hướng về trang chủ
+      setTimeout(() => {
+        window.location.href = "http://localhost:5173/"; // Điều hướng về trang chủ
+      }, 5000);
+    }, 2000); // Mô phỏng thời gian xử lý thanh toán (2 giây)
+  };
 
   // -- Render the web --
   return (
@@ -1156,39 +1204,48 @@ export default function Payment() {
             </div>
           </>
         )}
-        <div className={"mb-5 mt-10 text-right"}>
+
+        <div className="mb-5 mt-10 flex justify-end text-right">
+          {/* Hiển thị nút Continue nếu progress khác 3 */}
           {progress !== 3 ? (
             <button
-              className={
-                "mr-5 w-32 rounded-2xl border-2 bg-blue-500 px-5 py-2 text-lg text-white"
-              }
+              className="w-35 mr-5 rounded-2xl border-2 bg-blue-500 px-5 py-2 text-lg text-white"
               onClick={handleContinueOption}
             >
               Continue
             </button>
           ) : (
-            <button
-              className={
-                "mr-5 w-32 rounded-2xl border-2 bg-blue-500 px-5 py-2 text-lg text-white"
-              }
-              onClick={() => {
-                /* Handle payment here or define callback function */
-              }}
-            >
-              Pay Now
-            </button>
+            <div>
+              {/* Hiển thị modal thanh toán thành công */}
+              {paymentSuccess && (
+                <PaymentSuccessModal onClose={() => setPaymentSuccess(false)} />
+              )}
+
+              {/* Hiển thị nút Pay Now nếu chưa thanh toán */}
+              {!paymentSuccess && (
+                <button
+                  className="w-35 mr-5 rounded-2xl border-2 bg-blue-500 px-5 py-2 text-lg text-white"
+                  onClick={handlePayment}
+                  disabled={loading}
+                >
+                  {loading ? "Processing..." : "Pay Now"}
+                </button>
+              )}
+            </div>
           )}
+
+          {/* Hiển thị nút Back nếu progress không phải là 0 */}
           <button
-            className={`mr-5 w-32 rounded-2xl border-2 border-gray-300 px-5 py-2 text-lg text-gray-600 ${progress === 0 ? "hidden" : "inline-block"}`}
+            className={`w-35 mr-5 rounded-2xl border-2 border-gray-300 px-5 py-2 text-lg text-gray-600 ${
+              progress === 0 ? "hidden" : "inline-block"
+            }`}
             onClick={handleBackOption}
           >
             Back
           </button>
-          <button
-            className={
-              "w-32 rounded-2xl border-2 bg-red-500 px-5 py-2 text-lg text-white"
-            }
-          >
+
+          {/* Hiển thị nút Cancel */}
+          <button className="w-35 rounded-2xl border-2 bg-red-500 px-5 py-2 text-lg text-white">
             Cancel
           </button>
         </div>

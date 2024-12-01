@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
+
 const categories = [
   "Events",
   "Kitchen Utensils",
@@ -86,8 +87,12 @@ export default function Header() {
           id="cart"
           className="flex h-full cursor-pointer flex-col items-center justify-center px-5"
         >
-          <a href='/Cart'><i className="fa-solid fa-cart-shopping text-3xl text-white"></i></a>
-          <a href='/Cart' className="text-sm text-white">$0</a>
+          <a href="/Cart">
+            <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
+          </a>
+          <a href="/Cart" className="text-sm text-white">
+            $0
+          </a>
         </div>
       </div>
 
