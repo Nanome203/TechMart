@@ -20,26 +20,26 @@ export default function Signup({
         <input
           type="text"
           placeholder="First Name"
-          className="h-[55px] w-[185px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
+          className="h-[45px] w-[185px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
         />
         <input
           type="text"
           placeholder="Last Name"
-          className="h-[55px] w-[185px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
+          className="h-[45px] w-[185px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
         />
       </div>
       <input
         type="text"
         placeholder="Email"
-        className="h-[55px] w-[390px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
+        className="h-[45px] w-[390px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
       />
       <input
         type="text"
         placeholder="Phone"
-        className="h-[55px] w-[390px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
+        className="h-[45px] w-[390px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
       />
 
-      <div className="flex h-[55px] w-[390px] items-center justify-between rounded-md bg-gray-200 p-4">
+      <div className="flex h-[45px] w-[390px] items-center justify-between rounded-md bg-gray-200 p-4">
         <input
           type="text"
           placeholder="Day of Birth"
@@ -51,10 +51,10 @@ export default function Signup({
       <input
         type="text"
         placeholder="Gender"
-        className="h-[55px] w-[390px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
+        className="h-[45px] w-[390px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
       />
 
-      <div className="flex h-[55px] w-[390px] justify-between">
+      {/* <div className="flex h-[45px] w-[390px] justify-between">
         <input
           type="text"
           placeholder="Street"
@@ -67,7 +67,7 @@ export default function Signup({
         />
       </div>
 
-      <div className="flex h-[55px] w-[390px] justify-between">
+      <div className="flex h-[45px] w-[390px] justify-between">
         <input
           type="text"
           placeholder="Zipcode"
@@ -78,9 +78,9 @@ export default function Signup({
           placeholder="State"
           className="w-[185px] rounded-md border-none bg-gray-200 p-4 text-lg outline-none"
         />
-      </div>
+      </div> */}
 
-      <div className="relative flex h-[55px] w-[390px] items-center justify-between rounded-md bg-gray-200 p-2">
+      <div className="relative flex h-[45px] w-[390px] items-center justify-between rounded-md bg-gray-200 p-2">
         <input
           id="toggle-password"
           type="password"
@@ -106,7 +106,7 @@ export default function Signup({
         </button>
       </div>
 
-      <div className="relative flex h-[55px] w-[390px] items-center justify-between rounded-md bg-gray-200 p-2">
+      <div className="relative flex h-[45px] w-[390px] items-center justify-between rounded-md bg-gray-200 p-2">
         <input
           id="toggle-confirm-password"
           type="password"
@@ -136,7 +136,7 @@ export default function Signup({
       </div>
 
       <button
-        className="h-12 w-[45%] cursor-pointer rounded-lg bg-blue-600 font-semibold text-white hover:border-2 hover:border-blue-600 hover:bg-white hover:text-blue-600"
+        className="h-10 w-[40%] cursor-pointer rounded-lg bg-blue-600 font-semibold text-white hover:border-2 hover:border-blue-600 hover:bg-white hover:text-blue-600"
         onClick={handleLogin}
       >
         Sign Up
@@ -148,23 +148,25 @@ export default function Signup({
         <div className="mx-5 flex-1 border-t border-black"></div>
       </div>
 
-      <button className="flex h-12 w-[45%] cursor-pointer items-center justify-center rounded-lg border-2 border-blue-600 bg-gray-100 p-4 transition hover:scale-105">
-        <img
-          src="https://img.icons8.com/?size=36&id=17949&format=png&color=000000"
-          alt="Google"
-          className="h-6 w-6"
-        />
-        <p className="ml-3 font-semibold text-blue-600">Google</p>
-      </button>
+      <div className="flex items-center justify-center gap-4">
+        <button className="flex h-12 w-[45%] cursor-pointer items-center justify-center rounded-lg border-2 border-blue-600 bg-gray-100 p-4 transition hover:scale-105">
+          <img
+            src="https://img.icons8.com/?size=36&id=17949&format=png&color=000000"
+            alt="Google"
+            className="h-6 w-6"
+          />
+          <p className="ml-3 font-semibold text-blue-600">Google</p>
+        </button>
 
-      <button className="flex h-12 w-[45%] cursor-pointer items-center justify-center rounded-lg border-2 border-blue-600 bg-gray-100 p-4 transition hover:scale-105">
-        <img
-          src="https://img.icons8.com/?size=36&id=118501&format=png&color=000000"
-          alt="Facebook"
-          className="h-6 w-6"
-        />
-        <p className="ml-3 font-semibold text-blue-600">Facebook</p>
-      </button>
+        <button className="flex h-12 w-[45%] cursor-pointer items-center justify-center rounded-lg border-2 border-blue-600 bg-gray-100 p-4 transition hover:scale-105">
+          <img
+            src="https://img.icons8.com/?size=36&id=118501&format=png&color=000000"
+            alt="Facebook"
+            className="h-6 w-6"
+          />
+          <p className="ml-3 font-semibold text-blue-600">Facebook</p>
+        </button>
+      </div>
 
       <div className="mb-2">
         Already had an account?
