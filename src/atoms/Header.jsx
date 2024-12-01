@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
+import SearchBar from "./SearchBar.jsx";
 
 const categories = [
   "Events",
@@ -66,19 +67,7 @@ export default function Header() {
             <p className="font-bold">Ho Chi Minh, Vietnam</p>
           </div>
         </div>
-        <div
-          id="search-bar"
-          className="flex h-full w-1/3 items-center justify-center"
-        >
-          <input
-            type="search"
-            className="h-2/5 w-2/3 rounded-s-lg px-5 py-1 outline-none"
-            placeholder="Search here"
-          />
-          <button className="h-2/5 w-10 rounded-e-lg bg-gray-300 hover:bg-gray-400 active:bg-gray-500">
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
+        <SearchBar />
         <div
           id="reorder"
           className="flex h-full cursor-pointer items-center gap-2 px-5"

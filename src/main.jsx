@@ -11,6 +11,7 @@ import SearchPage from "./routes/SearchPage.jsx";
 import HomePage from "./routes/HomePage.jsx";
 import TestPage from "./routes/TestPage.jsx";
 import Cart from "./routes/Cart.jsx";
+import SearchPage2 from "./routes/SearchPage2.jsx";
 
 const routerConfig = createBrowserRouter([
   {
@@ -35,8 +36,8 @@ const routerConfig = createBrowserRouter([
         element: <Payment />,
       },
       {
-        path: "/searchpage",
-        element: <SearchPage />,
+        path: "/search/:keyword",
+        element: <SearchPage2 />,
       },
       {
         path: "/test",

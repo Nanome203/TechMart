@@ -3,8 +3,33 @@ import Header from "./SearchPageComponents/Header";
 import Sidebar from "./SearchPageComponents/Sidebar";
 import ProductGrid from "./SearchPageComponents/ProductGrid";
 import Footersignup from "../atoms/Footersignup";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function SearchPage() {
+  const { keyword } = useParams();
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://martech-backend.onrender.com/api/products/search/keyword?keyword=${keyword}`,
+      )
+      .then((res) => {
+        if (res.data.products) {
+          setResults(res.data.products);
+        } else {
+          setError("Tìm kiếm thất bại");
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Tìm kiếm thất bại");
+        setLoading(false);
+      });
+  }, [keyword]);
   // State for search query and filters
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
@@ -65,6 +90,7 @@ function SearchPage() {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
+          products={results}
         />
       </div>
 
