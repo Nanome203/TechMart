@@ -27,13 +27,13 @@ const ProductGrid = ({
       <div className="grid grid-cols-4 gap-x-28 gap-y-3">
         {products.map((product) => (
           <ProductTag
-            key={product.product_id}
+            key={`${product.product_id}_${Math.random()}`}
             image={product.image || ""}
             name={product.descript}
             stars="4.5"
             discountedPrice={product.price}
             originalPrice={product.price * 1.2}
-            id={product.id}
+            id={product.product_id}
             weight={product.weight_g}
             length={product.length_cm}
             height={product.height_cm}

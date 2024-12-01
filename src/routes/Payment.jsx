@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { CiDeliveryTruck } from "react-icons/ci";
 import {
   FaCheck,
@@ -15,6 +15,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import { CartContext } from "../context/CartContext";
 
 const DialogPopup = ({ props }) => {
   const [open, setOpen] = React.useState(props.isOpened);
@@ -146,6 +147,7 @@ export default function Payment() {
   const [deliveryPlan, setDeliveryPlan] = React.useState("delivery_normal");
   const [storeAddress, setStoreAddress] = React.useState("");
   const [pickupDate, setPickupDate] = React.useState();
+  const { totalPrice } = useContext(CartContext);
 
   // -- Confirm delivery address --
   const [deliveryAddress, setDeliveryAddress] = React.useState({
@@ -578,7 +580,7 @@ export default function Payment() {
               </div>
               <PaymentReceipt
                 props={{
-                  subtotal: 369.25,
+                  subtotal: totalPrice,
                   delivery: 0.0,
                   tax: 5.22,
                 }}
@@ -814,7 +816,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: 369.25,
+                    subtotal: totalPrice,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -908,7 +910,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: 369.25,
+                    subtotal: totalPrice,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
@@ -1190,7 +1192,7 @@ export default function Payment() {
               <div>
                 <PaymentReceipt
                   props={{
-                    subtotal: 369.25,
+                    subtotal: totalPrice,
                     delivery: 0.0,
                     tax: 5.22,
                   }}
