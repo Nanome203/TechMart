@@ -7,7 +7,7 @@ import ProductDetails from "./routes/ProductDetailsPage.jsx";
 import ProfilePage from "./routes/Profile/index.jsx";
 import ErrorPage from "./routes/ErrorPage.jsx";
 import Payment from "./routes/Payment.jsx";
-import SearchPage from "./routes/SearchPage.jsx";
+import CategoryPage from "./routes/Category/CategoryPage.jsx";
 import HomePage from "./routes/HomePage.jsx";
 import TestPage from "./routes/TestPage.jsx";
 import Cart from "./routes/Cart.jsx";
@@ -38,6 +38,10 @@ const routerConfig = createBrowserRouter([
       {
         path: "/search/:keyword",
         element: <SearchPage2 />,
+      },
+      {
+        path: "/category/:category",
+        element: <CategoryPage />,
       },
       {
         path: "/test",
