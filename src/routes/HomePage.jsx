@@ -306,29 +306,6 @@ export default function Home() {
         </div>
 
         <hr className="border-t-1 mb-7 mt-7 border-gray-400" />
-
-        <div className="mb-7 flex flex-row items-center justify-center">
-          <div className="flex h-[68px] w-[548px] flex-col items-center justify-between">
-            {/* Recommendation Title */}
-            <p className="text-xl font-bold">
-              See personalized recommendations
-            </p>
-
-            {/* Sign In Button */}
-            <button className="h-6 w-36 rounded-2xl bg-[#FFAD33] text-sm font-bold text-white">
-              Sign In
-            </button>
-
-            {/* Sign Up Link */}
-            <p className="text-sm">
-              Don’t have an account?{" "}
-              <a href="#" className="text-blue-500 underline">
-                Sign up
-              </a>
-              .
-            </p>
-          </div>
-        </div>
       </div>
     </body>
   );

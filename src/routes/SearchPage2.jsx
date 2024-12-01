@@ -89,7 +89,6 @@ function SearchPage2() {
           onPageChange={setCurrentPage} // Cập nhật `currentPage` khi chuyển trang
         />
       </div>
-      <Footersignup />
     </div>
   );
 }
