@@ -10,7 +10,7 @@ import Spinner from "../atoms/Spinner";
 
 export default function ProductDetails() {
   const location = useLocation();
-  const { id, name, image } = location.state;
+  const { id, name, image, discountedPrice, originalPrice } = location.state;
   const [description, setDescription] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
   useEffect(() => {
@@ -34,6 +34,7 @@ export default function ProductDetails() {
       setDescription(description_response.data.product_description);
       // setRelatedProducts(related_products_response.data.related_items);
       setRelatedProducts(array);
+      console.log(array);
     };
     fetchData();
   }, [id]);
@@ -224,9 +225,10 @@ export default function ProductDetails() {
           <div className="mx-auto h-full w-11/12 rounded-xl bg-[#E5E5E5] bg-opacity-50 p-5">
             <section>
               <h1 className="text-3xl font-bold text-[#008500]">
-                Now $67.99{" "}
+                Now ${discountedPrice}
                 <sup className="text-lg font-normal text-gray-500">
-                  <s>$149.99</s> <i className="fa-solid fa-circle-info"></i>
+                  <s>${originalPrice}</s>{" "}
+                  <i className="fa-solid fa-circle-info"></i>
                 </sup>
               </h1>
               <div className="flex h-10 w-full items-center gap-2">
