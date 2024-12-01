@@ -18,7 +18,10 @@ function ProductTag({
   };
 
   return (
-    <Link to={`/products/${id}`} state={{ id, name, image }}>
+    <Link
+      to={`/products/${id}`}
+      state={{ id, name, image, discountedPrice, originalPrice }}
+    >
       <div className="border-gray relative m-3 h-96 w-72 cursor-pointer rounded-xl border-2 bg-white p-5 hover:shadow-lg">
         <div className="absolute left-1 top-1 rounded-xl bg-red-600 px-2 py-1 text-center text-sm text-white">
           {discountPercentage}%
