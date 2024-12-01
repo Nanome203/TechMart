@@ -237,7 +237,8 @@ export default function Home() {
               {products?.length > 0 ? (
                 products.map((product) => (
                   <ProductTag
-                    key={product.product_id}
+                    key={`${product.product_id}_${Math.random()}`}
+                    id={product.product_id}
                     discountPercentage={50}
                     image={product.image}
                     name={product.descript}

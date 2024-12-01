@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import SearchBar from "./SearchBar.jsx";
+import { CartContext } from "../Context/CartContext.jsx";
 
 const categories = [
   {
@@ -47,6 +48,7 @@ export default function Header() {
   const [isSignInVisible, setSignInVisible] = useState(false);
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { totalPrice } = useContext(CartContext);
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem("isLoggedIn") === "true";
@@ -130,12 +132,12 @@ export default function Header() {
           id="cart"
           className="flex h-full cursor-pointer flex-col items-center justify-center px-5"
         >
-          <a href="/Cart">
+          <Link to="/Cart">
             <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
-          </a>
-          <a href="/Cart" className="text-sm text-white">
-            $0
-          </a>
+          </Link>
+          <Link to="/Cart" className="text-sm text-white">
+            ${totalPrice.toFixed(2)}
+          </Link>
         </div>
       </div>
 

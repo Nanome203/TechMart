@@ -4,40 +4,42 @@ import "react-multi-carousel/lib/styles.css";
 import Stars from "../atoms/Stars";
 import Review from "../atoms/Review";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import Spinner from "../atoms/Spinner";
+import { CartContext } from "../Context/CartContext";
 
 export default function ProductDetails() {
   const location = useLocation();
   const { id, name, image, discountedPrice, originalPrice } = location.state;
+  const { cart, addToCart } = useContext(CartContext);
   const [description, setDescription] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
-  useEffect(() => {
-    setRelatedProducts(null);
-    setDescription(null);
-    const fetchData = async () => {
-      const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
-      console.log("BASE_URL", BASE_URL);
-      const description_response = await axios.get(
-        `${BASE_URL}/api/product-description/${id}`,
-      );
-      const related_products_response = await axios.get(
-        `${BASE_URL}/api/related-items/${id}?top_n=11`,
-      );
-      const array = [];
-      for (let key in Object.keys(
-        related_products_response.data.related_items,
-      )) {
-        array.push(related_products_response.data.related_items[key]);
-      }
-      setDescription(description_response.data.product_description);
-      // setRelatedProducts(related_products_response.data.related_items);
-      setRelatedProducts(array);
-      console.log(array);
-    };
-    fetchData();
-  }, [id]);
+  // useEffect(() => {
+  //   setRelatedProducts(null);
+  //   setDescription(null);
+  //   const fetchData = async () => {
+  //     const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
+  //     console.log("BASE_URL", BASE_URL);
+  //     const description_response = await axios.get(
+  //       `${BASE_URL}/api/product-description/${id}`,
+  //     );
+  //     const related_products_response = await axios.get(
+  //       `${BASE_URL}/api/related-items/${id}?top_n=11`,
+  //     );
+  //     const array = [];
+  //     for (let key in Object.keys(
+  //       related_products_response.data.related_items,
+  //     )) {
+  //       array.push(related_products_response.data.related_items[key]);
+  //     }
+  //     setDescription(description_response.data.product_description);
+  //     // setRelatedProducts(related_products_response.data.related_items);
+  //     setRelatedProducts(array);
+  //     console.log(array);
+  //   };
+  //   fetchData();
+  // }, [id]);
   const responsive = {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
@@ -78,7 +80,6 @@ export default function ProductDetails() {
         <div className="basis-1/3">
           <div className="relative w-full">
             <img
-              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
               src={image}
               alt="sofa"
               className="mb-3 aspect-square w-full rounded-3xl border-2 border-gray-300 object-contain p-5"
@@ -110,32 +111,27 @@ export default function ProductDetails() {
           </div>
           <div className="flex w-full items-center justify-center gap-5">
             <img
-              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
               src={image}
               alt="sofa"
               className="aspect-square w-20 rounded-3xl border-2 border-[#0071CE] object-contain"
             />
             <img
-              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
               src={image}
               alt="sofa"
               className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
             />
             <img
-              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
               src={image}
               alt="sofa"
               className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
             />
             <img
-              // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
               src={image}
               alt="sofa"
               className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
             />
             <div className="relative">
               <img
-                // src="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
                 src={image}
                 alt="sofa"
                 className="aspect-square w-20 rounded-3xl border-2 border-gray-300 object-contain"
@@ -251,12 +247,38 @@ export default function ProductDetails() {
                   <span>Free 90-day return policy</span>
                 </div>
               </div>
+
+              {/* Add to Cart */}
               <div className="flex w-full flex-col items-center gap-2">
-                <button className="h-14 w-10/12 rounded-full border-2 border-[#1173BE] text-xl font-bold text-[#1173BE] hover:bg-[#1173BE] hover:text-white active:bg-blue-500">
+                <button
+                  onClick={() => {
+                    console.log("Adding to cart:", {
+                      id,
+                      name,
+                      price: discountedPrice,
+                      image,
+                    });
+                    addToCart({ id, name, price: discountedPrice, image });
+                    console.log("Cart after adding:", cart);
+                  }}
+                  className="h-14 w-10/12 rounded-full border-2 border-[#1173BE] text-xl font-bold text-[#1173BE] hover:bg-[#1173BE] hover:text-white active:bg-blue-500"
+                >
                   Add to Cart
                 </button>
-                <button className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700">
-                  Buy now
+                <button
+                  onClick={() => {
+                    console.log("Adding to cart:", {
+                      id,
+                      name,
+                      price: discountedPrice,
+                      image,
+                    });
+                    addToCart({ id, name, price: discountedPrice, image });
+                    console.log("Cart after adding:", cart);
+                  }}
+                  className="hover: h-14 w-10/12 rounded-full bg-red-500 text-xl font-bold text-white hover:bg-red-600 active:bg-red-700"
+                >
+                  <Link to="/cart">Buy now</Link>
                 </button>
               </div>
               <hr className="my-5 border-black opacity-40" />
