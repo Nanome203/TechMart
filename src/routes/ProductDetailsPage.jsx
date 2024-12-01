@@ -11,54 +11,61 @@ import { CartContext } from "../Context/CartContext";
 
 export default function ProductDetails() {
   const location = useLocation();
-  const { id, name, image, discountedPrice, originalPrice } = location.state;
+  const { id, name, image, discountedPrice, originalPrice, height } =
+    location.state;
   const { cart, addToCart } = useContext(CartContext);
-  const [description, setDescription] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
-  // useEffect(() => {
-  //   setRelatedProducts(null);
-  //   setDescription(null);
-  //   const fetchData = async () => {
-  //     const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
-  //     console.log("BASE_URL", BASE_URL);
-  //     const description_response = await axios.get(
-  //       `${BASE_URL}/api/product-description/${id}`,
-  //     );
-  //     const related_products_response = await axios.get(
-  //       `${BASE_URL}/api/related-items/${id}?top_n=11`,
-  //     );
-  //     const array = [];
-  //     for (let key in Object.keys(
-  //       related_products_response.data.related_items,
-  //     )) {
-  //       array.push(related_products_response.data.related_items[key]);
-  //     }
-  //     setDescription(description_response.data.product_description);
-  //     // setRelatedProducts(related_products_response.data.related_items);
-  //     setRelatedProducts(array);
-  //     console.log(array);
-  //   };
-  //   fetchData();
-  // }, [id]);
+  const [productDetails, setProductDetails] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    setRelatedProducts(null);
+    setProductDetails(null);
+    // Gọi API để lấy sản phẩm liên quan
+    const fetchRelatedProducts = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/related-items/${id}`);
+        setRelatedProducts(response.data.related_items);
+      } catch (error) {
+        console.error("Error fetching related products:", error);
+      }
+    };
+
+    // Gọi API để lấy chi tiết sản phẩm
+    const fetchProductDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://martech-backend.onrender.com/api/product-description/${id}`,
+        );
+        setProductDetails(response.data.product_description); // Cập nhật chi tiết sản phẩm vào state
+      } catch (error) {
+        console.error("Error fetching product detail:", error);
+      }
+    };
+
+    fetchRelatedProducts();
+    fetchProductDetail();
+  }, [id]);
+
   const responsive = {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 3000, min: 1500 },
+      breakpoint: { max: 2600, min: 1800 },
       items: 6,
       slidesToSlide: 7,
     },
     superLargeDesktop: {
-      breakpoint: { max: 1500, min: 1150 },
+      breakpoint: { max: 1800, min: 1600 },
       items: 5,
       slidesToSlide: 5,
     },
     largeDesktop: {
-      breakpoint: { max: 1150, min: 1024 },
+      breakpoint: { max: 1600, min: 1250 },
       items: 4,
       slidesToSlide: 4,
     },
     desktop: {
-      breakpoint: { max: 1024, min: 800 },
+      breakpoint: { max: 1250, min: 800 },
       items: 3,
       slidesToSlide: 3,
     },
@@ -148,11 +155,7 @@ export default function ProductDetails() {
         {/* Info */}
         <div className="basis-1/3">
           <div className="w-full">
-            <h1 className="line-clamp-3 text-2xl">
-              {/* City Scene - Queen Comforter Set, Smooth & Soft Bedding with
-              Matching Shams, Modern Home Decor (Courtney White, Queen) */}
-              {name}
-            </h1>
+            <h1 className="line-clamp-3 text-2xl">{name}</h1>
             <div>
               5.0 <Stars /> (259 ratings)
             </div>
@@ -160,11 +163,12 @@ export default function ProductDetails() {
           </div>
           <div className="w-full">
             <h1 className="text-2xl">About this product</h1>
-            {description ? (
+            {name ? (
               <>
                 <ul className="w-full list-inside list-disc">
-                  <li>{description}</li>
+                  <li>{name}</li>
                 </ul>
+
                 <u className="cursor-pointer font-bold hover:text-red-500">
                   View more
                 </u>
@@ -176,38 +180,9 @@ export default function ProductDetails() {
             <hr className="my-5 border-y-2" />
           </div>
           <div className="w-full">
-            <h1 className="text-2xl">Options</h1>
-            {description ? (
-              <ul className="list-inside list-disc">
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-              </ul>
+            <h1 className="text-2xl">Chi tiết</h1>
+            {productDetails ? (
+              <p className="list-inside list-disc">{productDetails}</p>
             ) : (
               <Spinner size="text-4xl" />
             )}
@@ -313,22 +288,21 @@ export default function ProductDetails() {
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-bolt-lightning text-5xl"></i>
                   <h1 className="text-lg font-bold">Fast delivery</h1>
-                  <p className="h-20 text-center">
-                    TechMart Premium+ Free charge for fast delivery. Take up to
-                    2 days
+                  <p className="h-24 text-center">
+                    TechMart Premium+ Free charge for fast delivery.
                   </p>
                 </div>
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-truck text-5xl"></i>
                   <h1 className="text-lg font-bold">Shipping</h1>
-                  <p className="h-20 text-center">
+                  <p className="h-24 text-center">
                     Casual delivery. Take 2 - 4 days to deliver.
                   </p>
                 </div>
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-car text-5xl"></i>
                   <h1 className="text-lg font-bold">Pick up</h1>
-                  <p className="h-20 text-center">Go to the techMart store</p>
+                  <p className="h-24 text-center">Go to the techMart store</p>
                 </div>
               </div>
               <div className="text-lg">
