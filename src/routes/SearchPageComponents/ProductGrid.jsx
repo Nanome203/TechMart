@@ -1,23 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "../../atoms/Pagination";
 import ProductTag from "../../atoms/ProductTag";
 
 const PRODUCTS_PER_PAGE = 20;
 
-// Sample products (could be replaced by an API call)
-const products = Array.from({ length: 500 }).map((_, index) => ({
-  id: index + 1,
-  name: `Sofa ${index + 1}`,
-  description: "Ngon bo re",
-  price: 20 + index,
-  oldPrice: 25 + index,
-  image: "",
-  stars: (Math.random() * 5).toFixed(1),
-  category: ["Livingroom", "Bedroom", "Furniture"][index % 3], // Sample categories
-}));
-
 const ProductGrid = ({ filters }) => {
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "https://martech-backend.onrender.com/api/recommendations/hCT0x9JiGXBQ?top_n=30",
+        ); // Thay URL_API_CỦA_BẠN bằng URL thực tế
+        const data = await response.json();
+        setProducts(data.recommendations); // Lấy danh sách sản phẩm từ API
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   // Apply filters
   const filteredProducts = products.filter((product) => {
@@ -40,31 +48,36 @@ const ProductGrid = ({ filters }) => {
     setCurrentPage(page);
   };
 
+  if (isLoading) {
+    return <div>Đang tải sản phẩm...</div>;
+  }
+
   return (
     <div className="w-3/4 p-4">
       <div className="mb-5">
         <span>
           Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}{" "}
           of {filteredProducts.length} results
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}{" "}
+          of {filteredProducts.length} results
         </span>
       </div>
 
-      <div className="grid grid-cols-5 gap-x-28 gap-y-3">
+      <div className="grid grid-cols-4 gap-x-28 gap-y-3">
         {productsToShow.map((product) => (
           <ProductTag
-            discountPercentage={50}
-            // image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-            // image="https://cdn.viettelstore.vn/Images/Product/ProductImage/594842402.jpeg"
-            image="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS83rckFJZZJ2fmOj4Y8VuNniusTmzTwDk10965KiS5fZUdGgHFY7_z0NDwOYI9XqR4RZL95KajVKEQtw13U-HwO62CWkmQ5dOM0jPV8Lo&usqp=CAE"
-            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
+            key={product.product_id}
+            id={product.product_id}
+            name={product.descript}
+            image={product.image}
+            discountedPrice={product.price} // Sử dụng giá từ API
+            originalPrice={product.price * 1.2} // Tính giá cũ giả định
             stars={5}
-            discountedPrice={100}
-            originalPrice={200}
-            id="MVNIoKNH3UsB"
           />
         ))}
       </div>
 
+      <div className="flex justify-center p-10">
       <div className="flex justify-center p-10">
         <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
       </div>

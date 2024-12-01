@@ -2,6 +2,8 @@ import ProductTag from "../atoms/ProductTag";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const data = [
   { image: "/src/assets/homepage/thanksevent.png", text: "Event" },
@@ -17,21 +19,6 @@ const data = [
 ];
 
 export default function Home() {
-  function generateUUID() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        const r = (Math.random() * 16) | 0,
-          v = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      },
-    );
-  }
-
-  const userId = localStorage.getItem("userId") || generateUUID();
-  localStorage.setItem("userId", userId);
-  console.log(userId);
-
   const responsive = {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
@@ -65,6 +52,38 @@ export default function Home() {
       slidesToSlide: 1,
     },
   };
+
+  const navigate = useNavigate();
+
+  const handleBuyNow = () => {
+    navigate("/searchpage"); // Điều hướng đến trang chi tiết sản phẩm
+  };
+
+  // const handleProductClick = (productId) => {
+  //   navigate(`/products/${productId}`); // Điều hướng đến trang chi tiết sản phẩm
+  // };
+
+  const [products, setProducts] = useState([]); // Create state to save product list
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(API_BASE_URL);
+        const response = await axios.get(
+          `${API_BASE_URL}/recommendations/hCT0x9JiGXBQ`,
+        );
+        // const response = await axios.get("https://martech-backend.onrender.com/api/recommendations/hCT0x9JiGXBQ");
+        console.log(response.data.recommendations); // Check
+        setProducts(response.data.recommendations); // Save product list to state
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <body className="flex flex-col items-center">
       <div className="w-[1320px]">
@@ -103,7 +122,10 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <button className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white">
+                <button
+                  className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white"
+                  onClick={handleBuyNow}
+                >
                   Shop Now
                 </button>
               </div>
@@ -116,7 +138,10 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <button className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white">
+                <button
+                  className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white"
+                  onClick={handleBuyNow}
+                >
                   Shop Now
                 </button>
               </div>
@@ -138,7 +163,10 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <button className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white">
+                <button
+                  className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white"
+                  onClick={handleBuyNow}
+                >
                   Shop Now
                 </button>
               </div>
@@ -151,7 +179,10 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <button className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white">
+                <button
+                  className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white"
+                  onClick={handleBuyNow}
+                >
                   Shop Now
                 </button>
               </div>
@@ -168,7 +199,10 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <button className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white">
+                <button
+                  className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white"
+                  onClick={handleBuyNow}
+                >
                   Shop Now
                 </button>
               </div>
@@ -181,7 +215,10 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <button className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white">
+                <button
+                  className="mt-3 h-[30px] w-[98px] rounded-lg border border-black bg-white hover:border-white hover:bg-black hover:text-white"
+                  onClick={handleBuyNow}
+                >
                   Shop Now
                 </button>
               </div>
@@ -194,293 +231,24 @@ export default function Home() {
         <hr className="border-t-1 mb-7 mt-7 border-gray-400" />
 
         <div className="flex h-[474px] flex-col justify-between">
-          <p className="text-3xl font-bold">Electronics Deal</p>
+          <p className="text-3xl font-bold">Sales For You</p>
           <div className="h-[400px] w-full">
             <Carousel responsive={responsive}>
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-            </Carousel>
-          </div>
-        </div>
-
-        <hr className="border-t-1 mb-7 mt-7 border-gray-400" />
-
-        <div className="flex h-[474px] flex-col justify-between">
-          <p className="text-3xl font-bold">Furniture For Sales</p>
-          <div className="h-[400px] w-full">
-            <Carousel responsive={responsive}>
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-            </Carousel>
-          </div>
-        </div>
-
-        <hr className="border-t-1 mb-7 mt-7 border-gray-400" />
-
-        <div className="flex h-[474px] flex-col justify-between">
-          <p className="text-3xl font-bold">Trending in Games & Accessories</p>
-          <div className="h-[400px] w-full">
-            <Carousel responsive={responsive}>
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
-              <ProductTag
-                discountPercentage={50}
-                image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-                name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-                stars={5}
-                discountedPrice={100}
-                originalPrice={200}
-              />
+              {products?.length > 0 ? (
+                products.map((product) => (
+                  <ProductTag
+                    key={product.product_id}
+                    discountPercentage={50}
+                    image={product.image}
+                    name={product.descript}
+                    stars={5}
+                    discountedPrice={product.price}
+                    originalPrice={product.price * 2}
+                  />
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
             </Carousel>
           </div>
         </div>
