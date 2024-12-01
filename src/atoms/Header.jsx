@@ -112,9 +112,12 @@ export default function Header() {
           className="flex h-full cursor-pointer items-center gap-2 px-5"
         >
           {isLoggedIn ? (
-            <div onClick={handleLogout} className="text-white">
-              <p>Hello, User</p>
-              <p className="rounded-xl border-[1px] border-white p-1 text-center font-bold">
+            <div className="flex items-center space-x-2 text-white">
+              <Link to="/profile">Hello, User</Link>
+              <p
+                className="rounded-xl border-[1px] border-white p-1 text-center font-bold"
+                onClick={handleLogout}
+              >
                 Log out
               </p>
             </div>
