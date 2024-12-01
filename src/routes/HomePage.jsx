@@ -65,12 +65,14 @@ export default function Home() {
 
   const [products, setProducts] = useState([]); // Create state to save product list
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
+        console.log(API_BASE_URL);
         const response = await axios.get(
-          `${BASE_URL}/api/recommendations/hCT0x9JiGXBQ`,
+          `${API_BASE_URL}/recommendations/hCT0x9JiGXBQ`,
         );
         // const response = await axios.get("https://martech-backend.onrender.com/api/recommendations/hCT0x9JiGXBQ");
         console.log(response.data.recommendations); // Check
@@ -232,7 +234,7 @@ export default function Home() {
           <p className="text-3xl font-bold">Sales For You</p>
           <div className="h-[400px] w-full">
             <Carousel responsive={responsive}>
-              {products.length > 0 ? (
+              {products?.length > 0 ? (
                 products.map((product) => (
                   <ProductTag
                     key={product.product_id}
