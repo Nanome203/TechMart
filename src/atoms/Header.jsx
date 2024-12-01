@@ -5,15 +5,42 @@ import Signup from "./Signup.jsx";
 import SearchBar from "./SearchBar.jsx";
 
 const categories = [
-  "Events",
-  "Kitchen Utensils",
-  "Electronics",
-  "Furniture",
-  "Books",
-  "Clothes",
-  "Holiday Shop",
-  "New & Trending",
-  "Toys",
+  {
+    name: "Fashion",
+    link: "/category/cool_stuff",
+  },
+  {
+    name: "Home & Kitchen",
+    link: "/category/housewares",
+  },
+  {
+    name: "Electronics",
+    link: "/category/electronics",
+  },
+  {
+    name: "Furniture",
+    link: "/category/furniture_decor",
+  },
+  {
+    name: "Technique Books",
+    link: "/category/books_technical",
+  },
+  {
+    name: "Perfume",
+    link: "/category/perfumery",
+  },
+  {
+    name: "Watches",
+    link: "/category/watches_gifts",
+  },
+  {
+    name: "Arts & Crafts",
+    link: "/category/art",
+  },
+  {
+    name: "Toys",
+    link: "/category/toys",
+  },
 ];
 
 export default function Header() {
@@ -120,12 +147,13 @@ export default function Header() {
           <i className="fa-solid fa-bars"></i>
         </div>
         {categories.map((category, index) => (
-          <div
+          <Link
+            to={category.link}
             key={index}
             className="flex h-full w-10 flex-1 cursor-pointer items-center justify-center border-l border-l-black hover:bg-gray-400"
           >
-            <p>{category}</p>
-          </div>
+            <p>{category.name}</p>
+          </Link>
         ))}
       </div>
       <div
