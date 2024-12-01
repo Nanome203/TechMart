@@ -23,9 +23,10 @@ const ProductGrid = ({ filters }) => {
   const filteredProducts = products.filter((product) => {
     const matchesPrice =
       product.price >= filters.price[0] && product.price <= filters.price[1];
-    const matchesRating = product.stars <= filters.rating || product.stars == 0 ;
+    const matchesRating = product.stars <= filters.rating || product.stars == 0;
     const matchesCategory =
-      filters.categories.length === 0 || filters.categories.includes(product.category);
+      filters.categories.length === 0 ||
+      filters.categories.includes(product.category);
     return matchesPrice && matchesRating && matchesCategory;
   });
 
@@ -43,28 +44,28 @@ const ProductGrid = ({ filters }) => {
     <div className="w-3/4 p-4">
       <div className="mb-5">
         <span>
-          Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of{" "}
-          {filteredProducts.length} results
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}{" "}
+          of {filteredProducts.length} results
         </span>
       </div>
 
       <div className="grid grid-cols-5 gap-x-28 gap-y-3">
         {productsToShow.map((product) => (
           <ProductTag
-          discountPercentage={50}
-          // image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
-          // image="https://cdn.viettelstore.vn/Images/Product/ProductImage/594842402.jpeg"
-          image="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS83rckFJZZJ2fmOj4Y8VuNniusTmzTwDk10965KiS5fZUdGgHFY7_z0NDwOYI9XqR4RZL95KajVKEQtw13U-HwO62CWkmQ5dOM0jPV8Lo&usqp=CAE"
-          name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
-          stars={5}
-          discountedPrice={100}
-          originalPrice={200}
-          id="MVNIoKNH3UsB"
+            discountPercentage={50}
+            // image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+            // image="https://cdn.viettelstore.vn/Images/Product/ProductImage/594842402.jpeg"
+            image="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS83rckFJZZJ2fmOj4Y8VuNniusTmzTwDk10965KiS5fZUdGgHFY7_z0NDwOYI9XqR4RZL95KajVKEQtw13U-HwO62CWkmQ5dOM0jPV8Lo&usqp=CAE"
+            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
+            stars={5}
+            discountedPrice={100}
+            originalPrice={200}
+            id="MVNIoKNH3UsB"
           />
         ))}
       </div>
 
-<div className="flex justify-center p-10">
+      <div className="flex justify-center p-10">
         <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
@@ -72,5 +73,3 @@ const ProductGrid = ({ filters }) => {
 };
 
 export default ProductGrid;
-
-
