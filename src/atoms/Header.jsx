@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Login from "./Login.jsx";
+import Signup from "./Signup.jsx";
+
 const categories = [
   "Events",
   "Kitchen Utensils",
@@ -12,8 +16,33 @@ const categories = [
 ];
 
 export default function Header() {
+  const [isSignInVisible, setSignInVisible] = useState(false);
+  const [isSignUpVisible, setIsSignUpVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedInStatus);
+  }, []);
+
+  const handleLogin = () => {
+    localStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);
+    setSignInVisible(false);
+    setIsSignUpVisible(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
+
+  const handleCloseSignin = () => {
+    setSignInVisible(false);
+  };
+
   return (
-    <header className="sticky top-0 z-[1001]">
+    <header className="sticky top-0 z-[1001] w-full">
       <div
         id="utilities"
         className="flex h-[80px] w-full justify-around bg-[#0071CE]"
@@ -64,19 +93,33 @@ export default function Header() {
           id="sign-in"
           className="flex h-full cursor-pointer items-center gap-2 px-5"
         >
-          <i className="fa-regular fa-user text-4xl text-white"></i>
-
-          <div id="sign-in-wrapper" className="text-white">
-            <p>Welcome, need to</p>
-            <p className="font-bold">Sign in?</p>
-          </div>
+          {isLoggedIn ? (
+            <div onClick={handleLogout} className="text-white">
+              <p>Hello, User</p>
+              <p className="rounded-xl border-[1px] border-white p-1 text-center font-bold">
+                Log out
+              </p>
+            </div>
+          ) : (
+            <div
+              onClick={() => setSignInVisible((prev) => !prev)}
+              className="text-white"
+            >
+              <p>Welcome, need to</p>
+              <p className="font-bold">Sign in?</p>
+            </div>
+          )}
         </div>
         <div
           id="cart"
           className="flex h-full cursor-pointer flex-col items-center justify-center px-5"
         >
-          <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
-          <p className="text-sm text-white">$300</p>
+          <a href="/Cart">
+            <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
+          </a>
+          <a href="/Cart" className="text-sm text-white">
+            $0
+          </a>
         </div>
       </div>
 
@@ -95,6 +138,32 @@ export default function Header() {
             <p>{category}</p>
           </div>
         ))}
+      </div>
+      <div
+        className={`${
+          !isSignInVisible && !isSignUpVisible && "hidden"
+        } fixed left-0 top-0 flex h-screen w-screen cursor-pointer items-center justify-center bg-black bg-opacity-50`}
+        onClick={handleCloseSignin}
+      >
+        <Login
+          isVisible={isSignInVisible}
+          onClose={handleCloseSignin}
+          onLogin={handleLogin}
+          switchToSignUp={() => {
+            setIsSignUpVisible(true);
+            setSignInVisible(false);
+          }}
+          handleLogin={handleLogin}
+        />
+        <Signup
+          isVisible={isSignUpVisible}
+          onClose={() => setIsSignUpVisible((prev) => !prev)}
+          switchToLogIn={() => {
+            setIsSignUpVisible(false);
+            setSignInVisible(true);
+          }}
+          handleLogin={handleLogin}
+        />
       </div>
     </header>
   );

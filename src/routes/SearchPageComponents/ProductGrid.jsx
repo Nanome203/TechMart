@@ -1,60 +1,71 @@
-import React, { useState } from 'react';
-import ProductCard from '../../atoms/ProductCard';
-import Pagination from '../../atoms/Pagination';
+import React, { useState } from "react";
+import Pagination from "../../atoms/Pagination";
+import ProductTag from "../../atoms/ProductTag";
 
-// Số lượng sản phẩm trên mỗi trang
 const PRODUCTS_PER_PAGE = 20;
 
-// Data sản phẩm giả lập
+// Sample products (could be replaced by an API call)
 const products = Array.from({ length: 500 }).map((_, index) => ({
   id: index + 1,
-  name: ``,
-  description: "",
-  price: ``,
-  oldPrice: ``,
+  name: `Sofa ${index + 1}`,
+  description: "Ngon bo re",
+  price: 20 + index,
+  oldPrice: 25 + index,
   image: "",
+  stars: (Math.random() * 5).toFixed(1),
+  category: ["Livingroom", "Bedroom", "Furniture"][index % 3], // Sample categories
 }));
 
-const ProductGrid = () => {
+const ProductGrid = ({ filters }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Tính toán chỉ số bắt đầu và kết thúc cho mỗi trang
+  // Apply filters
+  const filteredProducts = products.filter((product) => {
+    const matchesPrice =
+      product.price >= filters.price[0] && product.price <= filters.price[1];
+    const matchesRating = product.stars <= filters.rating || product.stars == 0;
+    const matchesCategory =
+      filters.categories.length === 0 ||
+      filters.categories.includes(product.category);
+    return matchesPrice && matchesRating && matchesCategory;
+  });
+
+  // Pagination logic
   const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const productsToShow = filteredProducts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
 
-  // Lọc sản phẩm để hiển thị chỉ những sản phẩm trên trang hiện tại
-  const productsToShow = products.slice(startIndex, endIndex);
-
-  // Tổng số trang dựa trên số lượng sản phẩm
-  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
-
-  // Hàm xử lý khi chuyển trang
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
   return (
     <div className="w-3/4 p-4">
-      {/* Phần hiển thị thông tin số lượng sản phẩm */}
-      <div className='mb-5'>
-        <span className='text-xl font-sm me-1'>Show</span>
-        <span className='text-xl font-semibold me-1'>
-          {startIndex + 1}-{Math.min(endIndex, products.length)} {/* Hiển thị số sản phẩm trên trang */}
-        </span>
-        <span className='text-xl font-sm me-1'>
-          of over {products.length} results {/* Tổng số sản phẩm */}
+      <div className="mb-5">
+        <span>
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}{" "}
+          of {filteredProducts.length} results
         </span>
       </div>
 
-      {/* Lưới sản phẩm */}
-      <div className="grid grid-cols-5 gap-3">
+      <div className="grid grid-cols-5 gap-x-28 gap-y-3">
         {productsToShow.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductTag
+            discountPercentage={50}
+            // image="https://noithatthienhoa.vn/wp-content/uploads/2021/09/vang-sofa-ni-2.jpg"
+            // image="https://cdn.viettelstore.vn/Images/Product/ProductImage/594842402.jpeg"
+            image="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS83rckFJZZJ2fmOj4Y8VuNniusTmzTwDk10965KiS5fZUdGgHFY7_z0NDwOYI9XqR4RZL95KajVKEQtw13U-HwO62CWkmQ5dOM0jPV8Lo&usqp=CAE"
+            name="Modern LED Couple with Luxury Bed and Two Set of Pillows"
+            stars={5}
+            discountedPrice={100}
+            originalPrice={200}
+            id="MVNIoKNH3UsB"
+          />
         ))}
       </div>
 
-      {/* Phân trang */}
-      <div className="p-10 flex justify-center">
+      <div className="flex justify-center p-10">
         <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>

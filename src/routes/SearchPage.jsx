@@ -1,61 +1,77 @@
-import React, { useState } from 'react';
-import Header from './SearchPageComponents/Header';
-import Sidebar from './SearchPageComponents/Sidebar';
-import ProductGrid from './SearchPageComponents/ProductGrid';
-import Pagination from "../atoms/Pagination";
+import React, { useState, useEffect } from "react";
+import Header from "./SearchPageComponents/Header";
+import Sidebar from "./SearchPageComponents/Sidebar";
+import ProductGrid from "./SearchPageComponents/ProductGrid";
+import Footersignup from "../atoms/Footersignup";
 
 function SearchPage() {
-  // State cho searchQuery và các bộ lọc
-  const [searchQuery, setSearchQuery] = useState(''); // Thay đổi searchQuery theo kết quả tìm kiếm
+  // State for search query and filters
+  const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
-    categories: []
+    categories: [],
+    price: [0, 250], // Price range filter
+    rating: 0, // Rating filter
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1); // Set initial page number and total pages
 
-  // Xử lý thay đổi filter
+  // Handle changes to filters (e.g., price, rating, categories)
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-    // Cập nhật searchQuery dựa trên các bộ lọc đã chọn
-    setSearchQuery(generateSearchQuery(newFilters));
+    setSearchQuery(generateSearchQuery(newFilters)); // Update searchQuery based on filters
   };
 
-  // Tạo searchQuery từ các bộ lọc
+  // Generate search query from the filters
   const generateSearchQuery = (filters) => {
     const { categories, price, rating } = filters;
-    let query = '';
-    if (categories.length) {
-      query += `${categories.join(', ')}`;
-    }
-    return query || 'All'; // Nếu không có filter nào, trả về "All"
-  };
-  const totalPages = 25;
+    let query = "";
 
+    if (categories.length) {
+      query += `categories: ${categories.join(", ")}`;
+    }
+
+    if (price) {
+      query += ` price: ${price[0]} - ${price[1]}`;
+    }
+
+    if (rating) {
+      query += ` rating: ${rating}`;
+    }
+
+    return query || "All"; // If no filters, return 'All'
+  };
+
+  // Pagination change handler
   const handlePageChange = (page) => {
-    console.log("Chuyển đến trang:", page);
-    // Thực hiện các logic khác, ví dụ: gọi API để lấy dữ liệu trang mới
+    setCurrentPage(page);
+    // Implement pagination logic: e.g., fetch data for the selected page
+    console.log("Moving to page:", page);
+    // Set total pages if needed based on fetched data
   };
 
   return (
     <div>
-      {/* Truyền searchQuery vào Header */}
+      {/* Header to display searchQuery */}
       <Header searchQuery={searchQuery} />
 
-      {/* Sidebar và ProductGrid */}
+      {/* Main Content */}
       <div className="flex">
+        {/* Sidebar to select filters */}
         <Sidebar onFilterChange={handleFilterChange} />
-        <ProductGrid filters={filters} />
+
+        {/* Product Grid to display filtered products */}
+        <ProductGrid
+          filters={filters}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
-    <hr style={{ borderColor: 'black' }} />
-    <div className='flex  flex-col items-center my-2'>
-        <div className='font-bold text-xl'>See personalized recommendations</div>
-        <a href='/signin' className='bg-[#FFAD33] text-white font-bold w-[152px] h-[24px] text-center rounded-2xl' >Sign in</a>
-        <div>
-          <a href='/login'>Don’t have an account? </a>
-          <a href="/login" className='underline text-[#0071CE]'> Sign up.</a>
-        </div>
-    </div>
+
+      {/* Footer */}
+      <Footersignup />
     </div>
   );
-  
 }
 
-export default  SearchPage;
+export default SearchPage;

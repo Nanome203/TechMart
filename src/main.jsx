@@ -8,6 +8,9 @@ import ProfilePage from "./routes/Profile/index.jsx";
 import ErrorPage from "./routes/ErrorPage.jsx";
 import Payment from "./routes/Payment.jsx";
 import SearchPage from "./routes/SearchPage.jsx";
+import HomePage from "./routes/HomePage.jsx";
+import TestPage from "./routes/TestPage.jsx";
+import Cart from "./routes/Cart.jsx";
 
 const routerConfig = createBrowserRouter([
   {
@@ -15,7 +18,12 @@ const routerConfig = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/products",
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "/products/:id",
+        // loader: detailsLoader,
         element: <ProductDetails />,
       },
       {
@@ -30,13 +38,21 @@ const routerConfig = createBrowserRouter([
         path: "/searchpage",
         element: <SearchPage />,
       },
+      {
+        path: "/test",
+        element: <TestPage />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
     ],
     errorElement: <ErrorPage />,
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={routerConfig} />
-  </StrictMode>,
+  // <StrictMode>
+  <RouterProvider router={routerConfig} />,
+  // </StrictMode>,
 );
