@@ -1,8 +1,13 @@
-export default function Signup({ isVisible, onClose, switchToLogIn }) {
+export default function Signup({
+  isVisible,
+  onClose,
+  switchToLogIn,
+  handleLogin,
+}) {
   return (
     <section
       onClick={(e) => e.stopPropagation()}
-      className={`${!isVisible && "hidden"} z-99 animate-in slide-in-from-top flex w-[500px] cursor-default flex-col items-center gap-2 rounded-2xl bg-gray-100 p-4 duration-300`}
+      className={`${!isVisible && "hidden"} z-99 flex w-[500px] cursor-default flex-col items-center gap-2 rounded-2xl bg-gray-100 p-4 duration-300 animate-in slide-in-from-top`}
     >
       <i
         className="fa-solid fa-x cursor-pointer self-end text-2xl hover:text-red-500"
@@ -130,7 +135,10 @@ export default function Signup({ isVisible, onClose, switchToLogIn }) {
         </button>
       </div>
 
-      <button className="h-12 w-[45%] cursor-pointer rounded-lg bg-blue-600 font-semibold text-white hover:border-2 hover:border-blue-600 hover:bg-white hover:text-blue-600">
+      <button
+        className="h-12 w-[45%] cursor-pointer rounded-lg bg-blue-600 font-semibold text-white hover:border-2 hover:border-blue-600 hover:bg-white hover:text-blue-600"
+        onClick={handleLogin}
+      >
         Sign Up
       </button>
 

@@ -1,7 +1,12 @@
-export default function Login({ isVisible, onClose, switchToSignUp }) {
+export default function Login({
+  isVisible,
+  onClose,
+  switchToSignUp,
+  handleLogin,
+}) {
   return (
     <section
-      className={` ${isVisible ? "" : "hidden"} animate-in slide-in-from-top z-99 flex w-[500px] cursor-default flex-col items-center gap-4 rounded-2xl bg-gray-100 p-4`}
+      className={` ${isVisible ? "" : "hidden"} z-99 flex w-[500px] cursor-default flex-col items-center gap-4 rounded-2xl bg-gray-100 p-4 animate-in slide-in-from-top`}
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -90,7 +95,10 @@ export default function Login({ isVisible, onClose, switchToSignUp }) {
         </a>
       </div>
 
-      <button className="h-12 w-[45%] cursor-pointer rounded-lg bg-blue-600 font-semibold text-white hover:border-2 hover:border-blue-600 hover:bg-white hover:text-blue-600">
+      <button
+        className="h-12 w-[45%] cursor-pointer rounded-lg bg-blue-600 font-semibold text-white hover:border-2 hover:border-blue-600 hover:bg-white hover:text-blue-600"
+        onClick={handleLogin}
+      >
         Login
       </button>
 

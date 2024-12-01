@@ -68,6 +68,7 @@ function ManageProfile() {
 
   const firstNameChange = (e) => {
     setFirstName(e.target.value);
+    console.log("First Name: ", e.target.value);
   };
   const lastNameChange = (e) => {
     setLastName(e.target.value);
@@ -116,6 +117,7 @@ function ManageProfile() {
             className="h-[50px] w-[350px] rounded-md border-2 border-gray-300 bg-[#f5f5f5] pl-4"
           />
         </div>
+        <p>{firstName}</p>
         <div className="flex flex-col">
           <label htmlFor="lastName">Last Name</label>
           <input

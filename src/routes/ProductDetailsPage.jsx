@@ -18,6 +18,7 @@ export default function ProductDetails() {
     setDescription(null);
     const fetchData = async () => {
       const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
+      console.log("BASE_URL", BASE_URL);
       const description_response = await axios.get(
         `${BASE_URL}/api/product-description/${id}`,
       );
