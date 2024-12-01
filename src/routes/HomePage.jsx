@@ -70,9 +70,24 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(API_BASE_URL);
+        const userIds = [
+          "hCT0x9JiGXBQ",
+          "PxA7fv9spyhx",
+          "g3nXeJkGI0Qw",
+          "EOEsCQ6QlpIg",
+          "mVz5LO2Vd6cL",
+          "UkqnhxmX7YMP",
+          "85jiDiGSfhTu",
+          "gDdkaN8b9s1g",
+          "9Csx6oXlpLl1",
+          "gZTPKLPRnreg",
+        ];
+        const randomUserId =
+          userIds[Math.floor(Math.random() * userIds.length)];
+
+        console.log("Chosen user_id:", randomUserId);
         const response = await axios.get(
-          `${API_BASE_URL}/recommendations/hCT0x9JiGXBQ`,
+          `${API_BASE_URL}/recommendations/${randomUserId}`,
         );
         // const response = await axios.get("https://martech-backend.onrender.com/api/recommendations/hCT0x9JiGXBQ");
         console.log(response.data.recommendations); // Check

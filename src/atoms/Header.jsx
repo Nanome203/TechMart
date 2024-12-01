@@ -136,7 +136,7 @@ export default function Header() {
             <i className="fa-solid fa-cart-shopping text-3xl text-white"></i>
           </Link>
           <Link to="/Cart" className="text-sm text-white">
-            ${totalPrice.toFixed(2)}
+            ${totalPrice?.toFixed(2)}
           </Link>
         </div>
       </div>

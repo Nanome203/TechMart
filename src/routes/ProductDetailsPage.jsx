@@ -11,35 +11,25 @@ import { CartContext } from "../Context/CartContext";
 
 export default function ProductDetails() {
   const location = useLocation();
-  const { id, name, image, discountedPrice, originalPrice } = location.state;
+  const { id, name, image, discountedPrice, originalPrice, height } =
+    location.state;
   const { cart, addToCart } = useContext(CartContext);
-  const [description, setDescription] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
-  // useEffect(() => {
-  //   setRelatedProducts(null);
-  //   setDescription(null);
-  //   const fetchData = async () => {
-  //     const BASE_URL = import.meta.env.VITE_ENV_BASE_URL;
-  //     console.log("BASE_URL", BASE_URL);
-  //     const description_response = await axios.get(
-  //       `${BASE_URL}/api/product-description/${id}`,
-  //     );
-  //     const related_products_response = await axios.get(
-  //       `${BASE_URL}/api/related-items/${id}?top_n=11`,
-  //     );
-  //     const array = [];
-  //     for (let key in Object.keys(
-  //       related_products_response.data.related_items,
-  //     )) {
-  //       array.push(related_products_response.data.related_items[key]);
-  //     }
-  //     setDescription(description_response.data.product_description);
-  //     // setRelatedProducts(related_products_response.data.related_items);
-  //     setRelatedProducts(array);
-  //     console.log(array);
-  //   };
-  //   fetchData();
-  // }, [id]);
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    // Gọi API để lấy sản phẩm liên quan
+    const fetchRelatedProducts = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/related-items/${id}`);
+        setRelatedProducts(response.data.related_items.slice(0, 5));
+      } catch (error) {
+        console.error("Error fetching related products:", error);
+      }
+    };
+
+    fetchRelatedProducts();
+  }, [id]);
   const responsive = {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
@@ -148,11 +138,7 @@ export default function ProductDetails() {
         {/* Info */}
         <div className="basis-1/3">
           <div className="w-full">
-            <h1 className="line-clamp-3 text-2xl">
-              {/* City Scene - Queen Comforter Set, Smooth & Soft Bedding with
-              Matching Shams, Modern Home Decor (Courtney White, Queen) */}
-              {name}
-            </h1>
+            <h1 className="line-clamp-3 text-2xl">{name}</h1>
             <div>
               5.0 <Stars /> (259 ratings)
             </div>
@@ -160,11 +146,12 @@ export default function ProductDetails() {
           </div>
           <div className="w-full">
             <h1 className="text-2xl">About this product</h1>
-            {description ? (
+            {name ? (
               <>
                 <ul className="w-full list-inside list-disc">
-                  <li>{description}</li>
+                  <li>{name}</li>
                 </ul>
+
                 <u className="cursor-pointer font-bold hover:text-red-500">
                   View more
                 </u>
@@ -176,37 +163,37 @@ export default function ProductDetails() {
             <hr className="my-5 border-y-2" />
           </div>
           <div className="w-full">
-            <h1 className="text-2xl">Options</h1>
-            {description ? (
+            <h1 className="text-2xl">Chi tiết</h1>
+            {name ? (
               <ul className="list-inside list-disc">
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
-                <li>Unavailable</li>
+                <li>
+                  Chất liệu: Sản phẩm được làm từ các vật liệu chất lượng cao,
+                  đảm bảo độ bền và an toàn khi sử dụng.
+                </li>
+                <li>
+                  Kích thước: Kích thước sản phẩm phù hợp với nhu cầu sử dụng,
+                  dễ dàng mang theo hoặc sử dụng tại nhà.
+                </li>
+                <li>
+                  Màu sắc: Sản phẩm có sẵn trong nhiều màu sắc đa dạng, phù hợp
+                  với sở thích cá nhân và không gian sử dụng.
+                </li>
+                <li>
+                  Tính năng: Tích hợp nhiều tính năng thông minh, mang lại sự
+                  tiện lợi tối ưu cho người sử dụng.
+                </li>
+                <li>
+                  Hiệu suất: Sản phẩm được thiết kế với hiệu suất cao, đảm bảo
+                  hoạt động mượt mà và hiệu quả.
+                </li>
+                <li>
+                  Bảo hành: Được bảo hành trong thời gian dài, cam kết đổi trả
+                  nếu sản phẩm gặp sự cố do lỗi của nhà sản xuất.
+                </li>
+                <li>
+                  Ứng dụng: Phù hợp với nhiều mục đích sử dụng, từ cá nhân đến
+                  gia đình hay công việc
+                </li>
               </ul>
             ) : (
               <Spinner size="text-4xl" />
@@ -313,22 +300,21 @@ export default function ProductDetails() {
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-bolt-lightning text-5xl"></i>
                   <h1 className="text-lg font-bold">Fast delivery</h1>
-                  <p className="h-20 text-center">
-                    TechMart Premium+ Free charge for fast delivery. Take up to
-                    2 days
+                  <p className="h-24 text-center">
+                    TechMart Premium+ Free charge for fast delivery.
                   </p>
                 </div>
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-truck text-5xl"></i>
                   <h1 className="text-lg font-bold">Shipping</h1>
-                  <p className="h-20 text-center">
+                  <p className="h-24 text-center">
                     Casual delivery. Take 2 - 4 days to deliver.
                   </p>
                 </div>
                 <div className="flex h-80 w-full basis-1/3 flex-col items-center justify-center gap-2 rounded-xl bg-[#1173BE] bg-opacity-20 px-5">
                   <i className="fa-solid fa-car text-5xl"></i>
                   <h1 className="text-lg font-bold">Pick up</h1>
-                  <p className="h-20 text-center">Go to the techMart store</p>
+                  <p className="h-24 text-center">Go to the techMart store</p>
                 </div>
               </div>
               <div className="text-lg">
@@ -368,16 +354,17 @@ export default function ProductDetails() {
         ) : (
           <Carousel responsive={responsive}>
             {relatedProducts.map((product) => (
-              <ProductTag
-                key={product.product_id}
-                discountPercentage={50}
-                image={product.image}
-                name={product.descript}
-                stars={5}
-                discountedPrice={parseFloat(product.price).toFixed(2)}
-                originalPrice={200}
-                id={product.product_id}
-              />
+              <div key={product.product_id} className="mx-8">
+                <ProductTag
+                  discountPercentage={50}
+                  image={product.image}
+                  name={product.descript}
+                  stars={5}
+                  discountedPrice={parseFloat(product.price).toFixed(2)}
+                  originalPrice={200}
+                  id={product.product_id}
+                />
+              </div>
             ))}
           </Carousel>
         )}
