@@ -70,28 +70,33 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userIds = [
-          "hCT0x9JiGXBQ",
-          "PxA7fv9spyhx",
-          "g3nXeJkGI0Qw",
-          "EOEsCQ6QlpIg",
-          "mVz5LO2Vd6cL",
-          "UkqnhxmX7YMP",
-          "85jiDiGSfhTu",
-          "gDdkaN8b9s1g",
-          "9Csx6oXlpLl1",
-          "gZTPKLPRnreg",
-        ];
-        const randomUserId =
-          userIds[Math.floor(Math.random() * userIds.length)];
+        let randomUserId = localStorage.getItem("randomUserId");
+
+        if (!randomUserId) {
+          // If no user ID in localStorage, generate a new one
+          const userIds = [
+            "hCT0x9JiGXBQ",
+            "PxA7fv9spyhx",
+            "g3nXeJkGI0Qw",
+            "EOEsCQ6QlpIg",
+            "mVz5LO2Vd6cL",
+            "UkqnhxmX7YMP",
+            "85jiDiGSfhTu",
+            "gDdkaN8b9s1g",
+            "9Csx6oXlpLl1",
+            "gZTPKLPRnreg",
+          ];
+          randomUserId = userIds[Math.floor(Math.random() * userIds.length)];
+          localStorage.setItem("randomUserId", randomUserId); // Save it to localStorage
+        }
 
         console.log("Chosen user_id:", randomUserId);
+
         const response = await axios.get(
           `${API_BASE_URL}/recommendations/${randomUserId}`,
         );
-        // const response = await axios.get("https://martech-backend.onrender.com/api/recommendations/hCT0x9JiGXBQ");
-        console.log(response.data.recommendations); // Check
-        setProducts(response.data.recommendations); // Save product list to state
+        console.log(response.data.recommendations);
+        setProducts(response.data.recommendations);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

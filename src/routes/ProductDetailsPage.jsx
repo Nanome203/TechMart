@@ -15,40 +15,57 @@ export default function ProductDetails() {
     location.state;
   const { cart, addToCart } = useContext(CartContext);
   const [relatedProducts, setRelatedProducts] = useState(null);
+  const [productDetails, setProductDetails] = useState(null);
   const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    setRelatedProducts(null);
+    setProductDetails(null);
     // Gọi API để lấy sản phẩm liên quan
     const fetchRelatedProducts = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/related-items/${id}`);
-        setRelatedProducts(response.data.related_items.slice(0, 5));
+        setRelatedProducts(response.data.related_items);
       } catch (error) {
         console.error("Error fetching related products:", error);
       }
     };
 
+    // Gọi API để lấy chi tiết sản phẩm
+    const fetchProductDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://martech-backend.onrender.com/api/product-description/${id}`,
+        );
+        setProductDetails(response.data.product_description); // Cập nhật chi tiết sản phẩm vào state
+      } catch (error) {
+        console.error("Error fetching product detail:", error);
+      }
+    };
+
     fetchRelatedProducts();
+    fetchProductDetail();
   }, [id]);
+
   const responsive = {
     ultraLargeDesktop: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 3000, min: 1500 },
+      breakpoint: { max: 2600, min: 1800 },
       items: 6,
       slidesToSlide: 7,
     },
     superLargeDesktop: {
-      breakpoint: { max: 1500, min: 1150 },
+      breakpoint: { max: 1800, min: 1600 },
       items: 5,
       slidesToSlide: 5,
     },
     largeDesktop: {
-      breakpoint: { max: 1150, min: 1024 },
+      breakpoint: { max: 1600, min: 1250 },
       items: 4,
       slidesToSlide: 4,
     },
     desktop: {
-      breakpoint: { max: 1024, min: 800 },
+      breakpoint: { max: 1250, min: 800 },
       items: 3,
       slidesToSlide: 3,
     },
@@ -164,37 +181,8 @@ export default function ProductDetails() {
           </div>
           <div className="w-full">
             <h1 className="text-2xl">Chi tiết</h1>
-            {name ? (
-              <ul className="list-inside list-disc">
-                <li>
-                  Chất liệu: Sản phẩm được làm từ các vật liệu chất lượng cao,
-                  đảm bảo độ bền và an toàn khi sử dụng.
-                </li>
-                <li>
-                  Kích thước: Kích thước sản phẩm phù hợp với nhu cầu sử dụng,
-                  dễ dàng mang theo hoặc sử dụng tại nhà.
-                </li>
-                <li>
-                  Màu sắc: Sản phẩm có sẵn trong nhiều màu sắc đa dạng, phù hợp
-                  với sở thích cá nhân và không gian sử dụng.
-                </li>
-                <li>
-                  Tính năng: Tích hợp nhiều tính năng thông minh, mang lại sự
-                  tiện lợi tối ưu cho người sử dụng.
-                </li>
-                <li>
-                  Hiệu suất: Sản phẩm được thiết kế với hiệu suất cao, đảm bảo
-                  hoạt động mượt mà và hiệu quả.
-                </li>
-                <li>
-                  Bảo hành: Được bảo hành trong thời gian dài, cam kết đổi trả
-                  nếu sản phẩm gặp sự cố do lỗi của nhà sản xuất.
-                </li>
-                <li>
-                  Ứng dụng: Phù hợp với nhiều mục đích sử dụng, từ cá nhân đến
-                  gia đình hay công việc
-                </li>
-              </ul>
+            {productDetails ? (
+              <p className="list-inside list-disc">{productDetails}</p>
             ) : (
               <Spinner size="text-4xl" />
             )}
@@ -354,17 +342,16 @@ export default function ProductDetails() {
         ) : (
           <Carousel responsive={responsive}>
             {relatedProducts.map((product) => (
-              <div key={product.product_id} className="mx-8">
-                <ProductTag
-                  discountPercentage={50}
-                  image={product.image}
-                  name={product.descript}
-                  stars={5}
-                  discountedPrice={parseFloat(product.price).toFixed(2)}
-                  originalPrice={200}
-                  id={product.product_id}
-                />
-              </div>
+              <ProductTag
+                key={product.product_id}
+                discountPercentage={50}
+                image={product.image}
+                name={product.descript}
+                stars={5}
+                discountedPrice={parseFloat(product.price).toFixed(2)}
+                originalPrice={200}
+                id={product.product_id}
+              />
             ))}
           </Carousel>
         )}
