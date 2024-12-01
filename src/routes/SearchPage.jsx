@@ -1,12 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import Header from './SearchPageComponents/Header';
-import Sidebar from './SearchPageComponents/Sidebar';
-import ProductGrid from './SearchPageComponents/ProductGrid';
+import React, { useState, useEffect } from "react";
+import Header from "./SearchPageComponents/Header";
+import Sidebar from "./SearchPageComponents/Sidebar";
+import ProductGrid from "./SearchPageComponents/ProductGrid";
 import Footersignup from "../atoms/Footersignup";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function SearchPage() {
+  const { keyword } = useParams();
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://martech-backend.onrender.com/api/products/search/keyword?keyword=${keyword}`,
+      )
+      .then((res) => {
+        if (res.data.products) {
+          setResults(res.data.products);
+        } else {
+          setError("Tìm kiếm thất bại");
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Tìm kiếm thất bại");
+        setLoading(false);
+      });
+  }, [keyword]);
   // State for search query and filters
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
     categories: [],
     price: [0, 250], // Price range filter
@@ -24,10 +49,10 @@ function SearchPage() {
   // Generate search query from the filters
   const generateSearchQuery = (filters) => {
     const { categories, price, rating } = filters;
-    let query = '';
+    let query = "";
 
     if (categories.length) {
-      query += `categories: ${categories.join(', ')}`;
+      query += `categories: ${categories.join(", ")}`;
     }
 
     if (price) {
@@ -38,7 +63,7 @@ function SearchPage() {
       query += ` rating: ${rating}`;
     }
 
-    return query || 'All'; // If no filters, return 'All'
+    return query || "All"; // If no filters, return 'All'
   };
 
   // Pagination change handler
@@ -60,7 +85,13 @@ function SearchPage() {
         <Sidebar onFilterChange={handleFilterChange} />
 
         {/* Product Grid to display filtered products */}
-        <ProductGrid filters={filters} currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        <ProductGrid
+          filters={filters}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          products={results}
+        />
       </div>
 
       {/* Footer */}

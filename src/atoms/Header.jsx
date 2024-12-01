@@ -2,17 +2,45 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
+import SearchBar from "./SearchBar.jsx";
 
 const categories = [
-  "Events",
-  "Kitchen Utensils",
-  "Electronics",
-  "Furniture",
-  "Books",
-  "Clothes",
-  "Holiday Shop",
-  "New & Trending",
-  "Toys",
+  {
+    name: "Fashion",
+    link: "/category/cool_stuff",
+  },
+  {
+    name: "Home & Kitchen",
+    link: "/category/housewares",
+  },
+  {
+    name: "Electronics",
+    link: "/category/electronics",
+  },
+  {
+    name: "Furniture",
+    link: "/category/furniture_decor",
+  },
+  {
+    name: "Technique Books",
+    link: "/category/books_technical",
+  },
+  {
+    name: "Perfume",
+    link: "/category/perfumery",
+  },
+  {
+    name: "Watches",
+    link: "/category/watches_gifts",
+  },
+  {
+    name: "Arts & Crafts",
+    link: "/category/art",
+  },
+  {
+    name: "Toys",
+    link: "/category/toys",
+  },
 ];
 
 export default function Header() {
@@ -66,19 +94,7 @@ export default function Header() {
             <p className="font-bold">Ho Chi Minh, Vietnam</p>
           </div>
         </div>
-        <div
-          id="search-bar"
-          className="flex h-full w-1/3 items-center justify-center"
-        >
-          <input
-            type="search"
-            className="h-2/5 w-2/3 rounded-s-lg px-5 py-1 outline-none"
-            placeholder="Search here"
-          />
-          <button className="h-2/5 w-10 rounded-e-lg bg-gray-300 hover:bg-gray-400 active:bg-gray-500">
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
+        <SearchBar />
         <div
           id="reorder"
           className="flex h-full cursor-pointer items-center gap-2 px-5"
@@ -131,12 +147,13 @@ export default function Header() {
           <i className="fa-solid fa-bars"></i>
         </div>
         {categories.map((category, index) => (
-          <div
+          <Link
+            to={category.link}
             key={index}
             className="flex h-full w-10 flex-1 cursor-pointer items-center justify-center border-l border-l-black hover:bg-gray-400"
           >
-            <p>{category}</p>
-          </div>
+            <p>{category.name}</p>
+          </Link>
         ))}
       </div>
       <div

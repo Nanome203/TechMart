@@ -58,6 +58,8 @@ const ProductGrid = ({ filters }) => {
         <span>
           Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}{" "}
           of {filteredProducts.length} results
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}{" "}
+          of {filteredProducts.length} results
         </span>
       </div>
 
@@ -75,6 +77,7 @@ const ProductGrid = ({ filters }) => {
         ))}
       </div>
 
+      <div className="flex justify-center p-10">
       <div className="flex justify-center p-10">
         <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
